@@ -7,7 +7,7 @@ import (
 	"go/token"
 )
 
-type AstModel struct {
+type Model struct {
 	Name            string
 	Fields          []Field
 	parseNextStruct bool
@@ -19,7 +19,7 @@ type Field struct {
 	Tag  string
 }
 
-func Parse(filename string, name string) *AstModel {
+func Parse(filename string, name string) *Model {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filename, nil, 0)
 	if err != nil {
@@ -27,13 +27,13 @@ func Parse(filename string, name string) *AstModel {
 		return nil
 	}
 
-	model := &AstModel{Name: name}
+	model := &Model{Name: name}
 	ast.Walk(model, f)
 
 	return model
 }
 
-func (v *AstModel) Visit(node ast.Node) (w ast.Visitor) {
+func (v *Model) Visit(node ast.Node) (w ast.Visitor) {
 	switch t := node.(type) {
 	case *ast.Ident:
 		if t.Name == v.Name {
