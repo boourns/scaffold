@@ -5,18 +5,14 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
+	"strings"
 )
 
 type Model struct {
 	Name            string
 	Fields          []Field
 	parseNextStruct bool
-}
-
-type Field struct {
-	Name string
-	Type string
-	Tag  string
+	parsedOverrides bool
 }
 
 func Parse(filename string, name string) *Model {
@@ -50,10 +46,10 @@ func (v *Model) Visit(node ast.Node) (w ast.Visitor) {
 					}
 				}
 				if inp.Tag != nil {
-					out.Tag = inp.Tag.Value
+					out.Tag = strings.Replace(inp.Tag.Value, "`", "", -1)
 				}
 				if len(inp.Names) == 1 {
-					out.Name = inp.Names[0].Name
+					out.name = inp.Names[0].Name
 				} else {
 					panic("Couldn't find field name")
 				}
@@ -64,4 +60,10 @@ func (v *Model) Visit(node ast.Node) (w ast.Visitor) {
 	}
 
 	return v
+}
+
+func (m *Model) parseOverrides() {
+	for _, f := range m.Fields {
+		f.parseOverrides()
+	}
 }
