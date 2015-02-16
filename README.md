@@ -3,7 +3,7 @@ code generator for go
 
 # Install
 ```bash
-go get github.com/boourns/scaffold/cmd`
+go get github.com/boourns/scaffold/cmd
 ```
 
 # Create a struct
