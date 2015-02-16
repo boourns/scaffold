@@ -10,6 +10,7 @@ import (
 
 type Model struct {
 	Name            string
+	Package         string
 	Fields          []Field
 	parseNextStruct bool
 	parsedOverrides bool
@@ -49,7 +50,7 @@ func (v *Model) Visit(node ast.Node) (w ast.Visitor) {
 					out.Tag = strings.Replace(inp.Tag.Value, "`", "", -1)
 				}
 				if len(inp.Names) == 1 {
-					out.name = inp.Names[0].Name
+					out.Name = inp.Names[0].Name
 				} else {
 					panic("Couldn't find field name")
 				}

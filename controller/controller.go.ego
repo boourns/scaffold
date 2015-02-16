@@ -1,0 +1,22 @@
+<%! func GenerateIndex(w io.Writer, m *ast.Model) error %>
+
+<%% import (
+  "github.com/boourns/scaffold/ast"
+)
+  %%>
+
+
+import (
+  "encoding/json"
+  "net/http"
+)
+
+<% controller := fmt.Sprintf("%sController", m.Name) %>
+
+type <%= controller %> struct{}
+
+func (m *<%= controller %>) Index() {
+
+}
+
+

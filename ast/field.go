@@ -6,7 +6,7 @@ import (
 )
 
 type Field struct {
-	name            string
+	Name            string
 	Type            string
 	Tag             string
 	overrides       map[string]string
@@ -28,8 +28,4 @@ func (f *Field) parseOverrides() {
 	f.overridesParsed = true
 	fmt.Printf("tag %s", f.Tag)
 	json.Unmarshal([]byte(f.Tag), &f.overrides)
-}
-
-func (f *Field) Name() string {
-	return f.Override("name", f.name)
 }
