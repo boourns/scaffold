@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"bytes"
 	"github.com/boourns/scaffold/ast"
 )
 
@@ -11,7 +12,9 @@ func (c controller) Description() string {
 }
 
 func (c controller) Generate(m *ast.Model) (string, error) {
-	return "yolo", nil
+	out := bytes.NewBuffer(nil)
+	err := GenerateIndex(out, m)
+	return out.String(), err
 }
 
 var Scaffold = controller{}

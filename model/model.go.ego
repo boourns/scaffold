@@ -1,0 +1,75 @@
+<%! func modelTemplate(w io.Writer, m *ast.Model) error %>
+
+<%% import (
+  "strings"
+  "github.com/boourns/scaffold/ast"
+  "github.com/boourns/scaffold/util"
+)%%>
+
+package <%= strings.ToLower(m.Name) %>
+
+import (
+	"github.com/boourns/dbutil"
+)
+
+func (m *<%= m.Name %>) sqlFields() string {
+  return "<%= util.StringJoin(m.FieldSlice(), ", ") %>"
+}
+
+func load<%= m.Name %>(rows *sql.Rows) (*<%= m.Name %>, error) {
+	ret := <%= m.Name %>{}
+
+	err := rows.Scan(<%= fieldString("&ret.", m.FieldSlice(), "") %>)
+	if err != nil {
+		return nil, err
+	}
+	return &ret, nil
+}
+
+func Where(tx dbutil.DBLike, where string, whereFields ...interface{}) (*<%= m.Name %>, error) {
+  ret := []<%=m.Name%>{}
+  sql := fmt.Sprintf("SELECT %%s from <%= m.Name %> WHERE %%s", <%=m.Name%>.sqlFields(), where)
+	rows, err := tx.Query(sql, whereFields)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+    item, err := load<%= m.Name %>(rows)
+    if err != nil {
+      return nil, err
+    }
+    ret = append(ret, item)
+	}
+  return ret
+}
+
+func (s *<%= m.Name %>) Update(tx dbutil.DBLike) error {
+		stmt, err := tx.Prepare(fmt.Sprintf("UPDATE <%= m.Name %>(%%s) VALUES(<%= util.QuestionMarks(len(m.FieldSlice())) %>) WHERE <%= m.Name %>.ID = ?", <%=m.Name%>.sqlFields()))
+
+		if err != nil {
+			return err
+		}
+
+    params := []interface{}{<%= fieldString("s.", m.FieldSlice(), "") %>}
+    params = append(params, s.ID)
+
+		_, err = stmt.Exec(params)
+		if err != nil {
+			return err
+		}
+}
+
+func (s *<%= m.Name %>) Insert(tx dbutil.DBLike) error {
+		stmt, err := tx.Prepare("INSERT INTO <%= m.Name %>(<%= fieldString("", m.FieldSliceWithoutID(), "") %>) VALUES(<%= util.QuestionMarks(len(m.FieldSliceWithoutID())) %>)")
+		if err != nil {
+			return err
+		}
+
+		_, err = stmt.Exec(<%= fieldString("s.", m.FieldSliceWithoutID(), "") %>)
+		if err != nil {
+			return err
+		}
+	  return nil
+}
+
+

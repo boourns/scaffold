@@ -5,14 +5,10 @@ import (
 	"github.com/boourns/avc/ast"
 )
 
-func Generate(model *ast.Model) {
-
-}
-
-func sqlType(goType string) string {
+func Type(goType string) string {
 	switch goType {
 	case "string", "[]byte":
-		return "VARCHAR2"
+		return "VARCHAR(255)"
 	case "int", "int64":
 		return "INT"
 	case "bool":
@@ -22,7 +18,7 @@ func sqlType(goType string) string {
 	}
 }
 
-func sqlCreateTable(model *ast.Model) string {
+func CreateTable(model *ast.Model) string {
 	sql := fmt.Sprintf("CREATE TABLE %s (\n", model.Name)
 	comma := ","
 	for index, field := range model.Fields {
@@ -33,8 +29,4 @@ func sqlCreateTable(model *ast.Model) string {
 	}
 	sql += ")\n"
 	return sql
-}
-
-func createTable(model *ast.Model) string {
-	return ""
 }

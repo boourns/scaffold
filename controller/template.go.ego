@@ -1,4 +1,4 @@
-<%! func GenerateIndex(w io.Writer, m *ast.Model) error %>
+<%! func controllerTemplate(w io.Writer, m *ast.Model) error %>
 
 <%% import (
   "github.com/boourns/scaffold/ast"

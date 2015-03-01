@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/boourns/scaffold/ast"
 	"github.com/boourns/scaffold/controller"
+	"github.com/boourns/scaffold/model"
+	"io/ioutil"
 )
 
 var inFileName string
@@ -14,6 +16,7 @@ var scaffoldName string
 
 var scaffolds = map[string]ast.Scaffold{
 	"controller": controller.Scaffold,
+	"model":      model.Scaffold,
 }
 
 func init() {
@@ -43,8 +46,16 @@ func main() {
 	fmt.Printf("- Parsing %s:%s\n", inFileName, structName)
 	model := ast.Parse(inFileName, structName)
 
-	fmt.Printf("- Generating %s\n", scaffoldName, outFileName)
+	fmt.Printf("- Generating %s\n", scaffoldName)
 	output, err := scaffold.Generate(model)
+	if err != nil {
+		fmt.Printf("Error generating %s: %s\n", scaffoldName, err)
+	}
 
-	fmt.Printf("%s %s", output, err)
+	fmt.Printf("- Saving as %s\n", outFileName)
+	err = ioutil.WriteFile(outFileName, []byte(output), 0644)
+
+	if err != nil {
+		fmt.Printf("Error writing file: %s\n", err)
+	}
 }

@@ -63,6 +63,24 @@ func (v *Model) Visit(node ast.Node) (w ast.Visitor) {
 	return v
 }
 
+func (m *Model) FieldSlice() []string {
+	out := []string{}
+	for _, v := range m.Fields {
+		out = append(out, v.Name)
+	}
+	return out
+}
+
+func (m *Model) FieldSliceWithoutID() []string {
+	out := []string{}
+	for _, v := range m.Fields {
+		if v.Name != "ID" {
+			out = append(out, v.Name)
+		}
+	}
+	return out
+}
+
 func (m *Model) parseOverrides() {
 	for _, f := range m.Fields {
 		f.parseOverrides()
