@@ -9,7 +9,7 @@ go get github.com/boourns/scaffold/cmd/scaffold
 
 # Create a struct
 ```bash
-cat > model.go <<EOF
+cat > user.go <<EOF
 type User struct {
 	Name  string
 	Admin bool
