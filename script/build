@@ -1,5 +1,7 @@
 #!/bin/bash
 
+go get ./...
+
 pushd cmd/scaffold
 go build
 popd

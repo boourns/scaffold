@@ -9,6 +9,5 @@ script:
  - ./test.sh
 
 install:
-  - go get
-  - ./build.sh
+  - ./script/build
 
