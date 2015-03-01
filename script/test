@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+env
+
+export PATH=$PATH:`pwd`/cmd/scaffold
+
+for i in model ast; do
+  if [ -e $i/script/test ]; then
+    pushd $i
+    ./script/test
+    popd
+  fi
+done

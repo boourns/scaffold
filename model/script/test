@@ -1,0 +1,8 @@
+#!/bin/bash
+
+../cmd/scaffold/scaffold -in="test/user.go" -out="test/user_model.go" -struct="User" -scaffold="model"
+
+pushd test
+go test
+popd
+
