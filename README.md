@@ -17,7 +17,13 @@ type User struct {
 EOF
 ```
 
-# Generate some scaffolds
+# Scaffold some code
 ```
 scaffold -in=user.go -out=user_model.go -struct=User -scaffold=model
+- Parsing user.go:User
+- Generating model
+- Saving as user_model.go
 ```
+
+# Use it
+
