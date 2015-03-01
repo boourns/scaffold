@@ -2,8 +2,6 @@
 
 set -e
 
-env
-
 export PATH=$PATH:`pwd`/cmd/scaffold
 
 for i in model ast; do

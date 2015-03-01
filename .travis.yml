@@ -5,7 +5,11 @@ go:
  - release
  - tip
 
+before_script:
+  - mysql -e 'create database scaffold_test;'
+
 script:
+ - export TEST_DATABASE_URL=travis:@tcp(127.0.0.1:3306)/scaffold_test
  - ./script/test
 
 install:
