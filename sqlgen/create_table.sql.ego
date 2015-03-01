@@ -1,0 +1,14 @@
+<%! func createTableSQL(w io.Writer, m *ast.Model) error %>
+
+<%% 
+import (
+  "github.com/boourns/scaffold/ast"
+)
+%%>
+
+CREATE TABLE <%= m.Name %> (
+  <% for i, field := range m.Fields { %>
+    <%= field.Name %> <%= sqlType(field) %><% if i < len(m.Fields)-1 { %>,<% }%>
+  <% } %>
+);
+
