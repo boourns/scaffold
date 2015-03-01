@@ -6,7 +6,7 @@ go:
  - tip
 
 script:
- - ./test.sh
+ - ./script/test
 
 install:
   - ./script/build
