@@ -19,6 +19,5 @@ EOF
 
 # Generate some scaffolds
 ```
-scaffold controller model.go User
--> generated UserController
+scaffold -in=user.go -out=user_model.go -struct=User -scaffold=model
 ```
