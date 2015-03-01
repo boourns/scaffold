@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 ../cmd/scaffold/scaffold -in="test/user.go" -out="test/user_model.go" -struct="User" -scaffold="model"
 
 pushd test
