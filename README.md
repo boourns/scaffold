@@ -1,4 +1,5 @@
-# scaffold
+# scaffold [![Build Status](https://travis-ci.org/boourns/scaffold.svg?branch=master)](https://travis-ci.org/boourns/scaffold)
+
 code generator for go
 
 # Install
