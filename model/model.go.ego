@@ -31,7 +31,7 @@ func load<%= m.Name %>(rows *sql.Rows) (*<%= m.Name %>, error) {
 
 func Where(tx dbutil.DBLike, where string, whereFields ...interface{}) ([]*<%= m.Name %>, error) {
   ret := []*<%=m.Name%>{}
-  sql := fmt.Sprintf("SELECT %%s from <%= m.Name %> WHERE %%s", sqlFieldsFor<%=m.Name%>(), where)
+  sql := fmt.Sprintf("SELECT %%s from <%= m.Name %> WHERE %%s", sqlFieldsFor<%=m.Name%>(), where...)
 	rows, err := tx.Query(sql, whereFields)
 	if err != nil {
 		return nil, err
