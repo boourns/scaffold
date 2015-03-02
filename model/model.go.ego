@@ -56,7 +56,7 @@ func (s *<%= m.Name %>) Update(tx dbutil.DBLike) error {
     params := []interface{}{<%= fieldString("s.", m.FieldSlice(), "") %>}
     params = append(params, s.ID)
 
-		_, err = stmt.Exec(params)
+		_, err = stmt.Exec(params...)
 		if err != nil {
 			return err
 		}

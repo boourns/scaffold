@@ -84,7 +84,7 @@ _, _ = fmt.Fprintf(w, "()))\n\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\n 
 //line model.go.ego:56
 _, _ = fmt.Fprintf(w, "%v",  fieldString("s.", m.FieldSlice(), "") )
 //line model.go.ego:56
-_, _ = fmt.Fprintf(w, "}\n    params = append(params, s.ID)\n\n\t\t_, err = stmt.Exec(params)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\n    return nil\n}\n\nfunc (s *")
+_, _ = fmt.Fprintf(w, "}\n    params = append(params, s.ID)\n\n\t\t_, err = stmt.Exec(params...)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\n    return nil\n}\n\nfunc (s *")
 //line model.go.ego:67
 _, _ = fmt.Fprintf(w, "%v",  m.Name )
 //line model.go.ego:67
