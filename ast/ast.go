@@ -12,11 +12,11 @@ type Model struct {
 	Name            string
 	Package         string
 	Fields          []Field
-	parseNextStruct bool
+	parsedStruct bool
 	parsedOverrides bool
 }
 
-func Parse(filename string, name string) *Model {
+func Parse(filename string) *Model {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filename, nil, 0)
 	if err != nil {
@@ -24,21 +24,25 @@ func Parse(filename string, name string) *Model {
 		return nil
 	}
 
-	model := &Model{Name: name}
+	model := &Model{}
 	ast.Walk(model, f)
 
 	return model
 }
 
 func (v *Model) Visit(node ast.Node) (w ast.Visitor) {
-	switch t := node.(type) {
-	case *ast.Ident:
-		if t.Name == v.Name {
-			v.parseNextStruct = true
-		}
-	case *ast.StructType:
-		if v.parseNextStruct {
-			for _, inp := range t.Fields.List {
+	if v.parsedStruct == false {
+		switch t := node.(type) {
+		case *ast.File:
+			v.Package = t.Name.Name
+			
+		case *ast.TypeSpec:
+			str, ok1 := t.Type.(*ast.StructType)
+
+			if ok1 {
+  			  v.Name = t.Name.Name
+
+			for _, inp := range str.Fields.List {
 				var out Field
 				if inp.Type != nil {
 					typ, ok := (inp.Type).(*ast.Ident)
@@ -56,8 +60,9 @@ func (v *Model) Visit(node ast.Node) (w ast.Visitor) {
 				}
 				v.Fields = append(v.Fields, out)
 			}
-			v.parseNextStruct = false
+			v.parsedStruct = true
 		}
+	}
 	}
 
 	return v

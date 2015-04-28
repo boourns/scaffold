@@ -3,15 +3,23 @@ package ast
 import "testing"
 
 func TestAstModelParses(t *testing.T) {
-	model := Parse("test/model.go", "User")
+	model := Parse("test/model.go")
 
 	if len(model.Fields) != 2 {
 		t.Errorf("Expected 2 fields")
 	}
+
+	if model.Package != "user" {
+		t.Errorf("Expected package name user, found %s", model.Package)
+	}
+
+	if model.Name != "User" {
+		t.Errorf("Expected struct named User, found %s", model.Name)
+	}
 }
 
 func TestAstOverrides(t *testing.T) {
-	model := Parse("test/model.go", "User")
+	model := Parse("test/model.go")
 
 	model.parseOverrides()
 
