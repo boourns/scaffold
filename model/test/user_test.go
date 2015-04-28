@@ -5,6 +5,7 @@ import (
 	"github.com/boourns/dbutil"
 	"os"
 	"testing"
+	"fmt"
 )
 
 var db *sql.DB
@@ -25,6 +26,10 @@ func TestUserCreateTable(t *testing.T) {
 	}
 
 	v := User{}
+	v.Name = "Tom"
+	v.Email = "tom@tom.com"
+	v.ResetToken = "asdf1234"
+
 	err = v.Insert(db)
 
 	if err != nil {
@@ -40,4 +45,6 @@ func TestUserCreateTable(t *testing.T) {
     if len(users) != 1 {
     	t.Errorf("Expected 1 user, received %d", len(users))
     }
+
+    fmt.Printf("Received user %#v", users[0])
 }
