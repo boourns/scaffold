@@ -5,6 +5,7 @@ go:
  - tip
 
 before_script:
+  - go get github.com/benbjohnson/ego/cmd/ego
   - mysql -e 'create database scaffold_test;'
 
 script:
