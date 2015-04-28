@@ -1,3 +1,4 @@
 cmd/scaffold/scaffold
 example/example
+model/test/user_model.go
 
