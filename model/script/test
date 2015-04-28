@@ -2,11 +2,11 @@
 
 set -e
 
-if [ ! -f ../cmd/scaffold/scaffold ]; then
-  pushd ../cmd/scaffold/
-  go build
-  popd
-fi
+ego
+
+pushd ../cmd/scaffold/
+go build
+popd
 
 ../cmd/scaffold/scaffold -in="test/user.go" -out="test/user_model.go" -struct="User" -scaffold="model"
 

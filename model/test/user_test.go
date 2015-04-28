@@ -31,4 +31,13 @@ func TestUserCreateTable(t *testing.T) {
 		t.Errorf("error inserting a new user: %s", err)
 	}
 
+    users, err := Select(db, "")
+
+    if err != nil {
+    	t.Errorf("error selecting all users back out: %s", err)
+    }
+
+    if len(users) != 1 {
+    	t.Errorf("Expected 1 user, received %d", len(users))
+    }
 }
