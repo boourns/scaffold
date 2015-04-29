@@ -6,7 +6,6 @@ import (
 	"github.com/boourns/scaffold/ast"
 	"github.com/boourns/scaffold/controller"
 	"github.com/boourns/scaffold/model"
-	"io/ioutil"
 )
 
 var inFileName string
@@ -42,18 +41,11 @@ func main() {
 	fmt.Printf("- Parsing %s\n", inFileName)
 	model := ast.Parse(inFileName)
 
-	
+	fmt.Printf("- Found package %s, struct %s", model.Package, model.Name)
 
-	fmt.Printf("- Generating %s\n", scaffoldName)
-	output, err := scaffold.Generate(model)
+	fmt.Printf("- Running %s\n", scaffoldName)
+	err := scaffold.Generate(model)
 	if err != nil {
 		fmt.Printf("Error generating %s: %s\n", scaffoldName, err)
-	}
-
-	fmt.Printf("- Saving as %s\n", outFileName)
-	err = ioutil.WriteFile(outFileName, []byte(output), 0644)
-
-	if err != nil {
-		fmt.Printf("Error writing file: %s\n", err)
 	}
 }

@@ -8,7 +8,7 @@ pushd ../cmd/scaffold/
 go build
 popd
 
-../cmd/scaffold/scaffold -in="test/user.go" -out="test/user_model.go" -struct="User" -scaffold="model"
+../cmd/scaffold/scaffold -in="test/user.go" -scaffold="model"
 
 pushd test
 go get
