@@ -6,10 +6,10 @@ import (
 	"github.com/boourns/scaffold/ast"
 	"github.com/boourns/scaffold/controller"
 	"github.com/boourns/scaffold/model"
+	"os"
 )
 
-var inFileName string
-var scaffoldName string
+var flags *flag.FlagSet
 
 var scaffolds = map[string]ast.Scaffold{
 	"controller": controller.Scaffold,
@@ -17,35 +17,38 @@ var scaffolds = map[string]ast.Scaffold{
 }
 
 func init() {
-	flag.StringVar(&inFileName, "in", "", "input struct filename")
-	flag.StringVar(&scaffoldName, "scaffold", "", "Scaffold name")
+	flags = flag.NewFlagSet(os.Args[0], flag.ContinueOnError)
 }
 
 func main() {
-	flag.Parse()
+	if len(os.Args) < 2 {
+		fmt.Println("Scaffold missing.")
+		printValidScaffolds()
 
-	if inFileName == "" ||  scaffoldName == "" {
-		fmt.Println("Required parameters missing.")
-		flag.PrintDefaults()
+		flags.PrintDefaults()
 		return
 	}
 
+	scaffoldName := os.Args[1]
 	scaffold, ok := scaffolds[scaffoldName]
 	if !ok {
-		fmt.Println("Invalid scaffold.  Valid scaffolds are:")
-		for name, s := range scaffolds {
-			fmt.Printf("%s: %s\n", name, s.Description())
-		}
+		fmt.Println("Invalid scaffold: %s", scaffoldName)
+		printValidScaffolds()
 	}
 
-	fmt.Printf("- Parsing %s\n", inFileName)
-	model := ast.Parse(inFileName)
-
-	fmt.Printf("- Found package %s, struct %s", model.Package, model.Name)
-
 	fmt.Printf("- Running %s\n", scaffoldName)
-	err := scaffold.Generate(model)
+
+	err := scaffold.Generate(flags)
+
 	if err != nil {
 		fmt.Printf("Error generating %s: %s\n", scaffoldName, err)
+	}
+}
+
+func printValidScaffolds() {
+	fmt.Println("Valid scaffolds are:")
+
+	for name, s := range scaffolds {
+		fmt.Printf("%s: %s\n", name, s.Description())
 	}
 }

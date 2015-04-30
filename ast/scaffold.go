@@ -1,6 +1,11 @@
 package ast
 
+import (
+	"flag"
+)
+
 type Scaffold interface {
 	Description() string
-	Generate(*Model) (error)
+	Generate(flags *flag.FlagSet) error
+	Details() string
 }

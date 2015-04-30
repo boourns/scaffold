@@ -10,7 +10,7 @@ popd
 
 
 pushd test
-../../cmd/scaffold/scaffold -in=user.go -scaffold=model
+../../cmd/scaffold/scaffold model -in=user.go
 
 go get
 go test
