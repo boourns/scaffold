@@ -31,16 +31,12 @@ func TestUserCreateTable(t *testing.T) {
 	v.ResetToken = "asdf1234"
 
 	err = v.Insert(db)
+
 	if err != nil {
 		t.Errorf("error inserting a new user: %s", err)
 	}
 
-	err = v.Insert(db)
-	if err != nil {
-		t.Errorf("error inserting a new user: %s", err)
-	}
-
-    users, err := Select(db, "ORDER BY ID DESC LIMIT 1")
+    users, err := Select(db, "")
 
     if err != nil {
     	t.Errorf("error selecting all users back out: %s", err)

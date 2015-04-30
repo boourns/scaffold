@@ -19,7 +19,7 @@ func sqlType(field ast.Field) string {
 	}
 
 	if field.Name == "ID" {
-		sql = fmt.Sprintf("%s NOT NULL PRIMARY KEY AUTO_INCREMENT", sql)
+		sql = fmt.Sprintf("%s NOT NULL PRIMARY KEY", sql)
 	}
 	return sql
 }
