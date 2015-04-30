@@ -11,7 +11,7 @@ import (
 type model struct{}
 
 func (c model) Description() string {
-	return "Generate JSON REST endpoints"
+	return "Micro ORM: SQL CreateTable, Insert, Update, Select, Delete"
 }
 
 func (c model) Generate(m *ast.Model) (error) {
