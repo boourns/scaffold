@@ -1,0 +1,12 @@
+<%! func staticTemplate(w io.Writer, dir string, pck string) error %>
+
+package <%== pck %>
+
+import (
+	"net/http"
+)
+
+func init() {
+  fs := http.FileServer(http.Dir("<%== dir %>"))
+  http.Handle("/<%== dir %>", fs)
+}

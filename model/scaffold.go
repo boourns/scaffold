@@ -26,6 +26,7 @@ func (c model) Generate(flags *flag.FlagSet) error {
 
 	if showHelp {
 		fmt.Printf(c.Details())
+		flags.PrintDefaults()
 		return nil
 	}
 

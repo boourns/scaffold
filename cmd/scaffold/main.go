@@ -6,6 +6,7 @@ import (
 	"github.com/boourns/scaffold/ast"
 	"github.com/boourns/scaffold/controller"
 	"github.com/boourns/scaffold/model"
+	"github.com/boourns/scaffold/static"
 	"os"
 )
 
@@ -14,6 +15,7 @@ var flags *flag.FlagSet
 var scaffolds = map[string]ast.Scaffold{
 	"controller": controller.Scaffold,
 	"model":      model.Scaffold,
+	"static":     static.Scaffold,
 }
 
 func init() {
@@ -22,7 +24,7 @@ func init() {
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("Scaffold missing.")
+		fmt.Println("Scaffold missing. Usage:", os.Args[0], "<scaffold name>\n")
 		printValidScaffolds()
 
 		flags.PrintDefaults()
