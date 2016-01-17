@@ -71,10 +71,15 @@ func (s *<%== m.Name %>) Insert(tx dbutil.DBLike) error {
 			return err
 		}
 
-		_, err = stmt.Exec(<%== fieldString("s.", m.FieldSliceWithoutID(), "") %>)
+		result, err := stmt.Exec(<%== fieldString("s.", m.FieldSliceWithoutID(), "") %>)
 		if err != nil {
 			return err
-		}
+    }
+
+    s.ID, err = res.LastInsertId()
+    if err != nil {
+      return err
+    }
 	  return nil
 }
 
