@@ -42,7 +42,8 @@ func Select(tx dbutil.DBLike, cond string, condFields ...interface{}) ([]*<%== m
       return nil, err
     }
     ret = append(ret, item)
-	}
+  }
+  rows.Close()
   return ret, nil
 }
 
