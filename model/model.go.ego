@@ -76,7 +76,7 @@ func (s *<%== m.Name %>) Insert(tx dbutil.DBLike) error {
 			return err
     }
 
-    s.ID, err = res.LastInsertId()
+    s.ID, err = result.LastInsertId()
     if err != nil {
       return err
     }

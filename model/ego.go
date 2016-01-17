@@ -108,7 +108,7 @@ _, _ = io.WriteString(w, ")\")\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\n
 //line model.go.ego:74
 _, _ = fmt.Fprintf(w, "%v",  fieldString("s.", m.FieldSliceWithoutID(), "") )
 //line model.go.ego:74
-_, _ = io.WriteString(w, ")\n\t\tif err != nil {\n\t\t\treturn err\n    }\n\n    s.ID, err = res.LastInsertId()\n    if err != nil {\n      return err\n    }\n\t  return nil\n}\n\nfunc Create")
+_, _ = io.WriteString(w, ")\n\t\tif err != nil {\n\t\t\treturn err\n    }\n\n    s.ID, err = result.LastInsertId()\n    if err != nil {\n      return err\n    }\n\t  return nil\n}\n\nfunc Create")
 //line model.go.ego:86
 _, _ = fmt.Fprintf(w, "%v",  m.Name )
 //line model.go.ego:86
