@@ -11,7 +11,7 @@ func sqlType(field ast.Field) string {
 	case "string", "[]byte":
 		sql = "VARCHAR(255)"
 	case "int", "int64":
-		sql = "INT"
+		sql = "INTEGER"
 	case "bool":
 		sql = "BOOLEAN"
 	default:
@@ -19,7 +19,7 @@ func sqlType(field ast.Field) string {
 	}
 
 	if field.Name == "ID" {
-		sql = fmt.Sprintf("%s NOT NULL PRIMARY KEY AUTO_INCREMENT", sql)
+		sql = fmt.Sprintf("%s PRIMARY KEY", sql)
 	}
 	return sql
 }
