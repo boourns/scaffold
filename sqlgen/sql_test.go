@@ -1,9 +1,10 @@
 package sqlgen
 
 import (
-	"github.com/boourns/scaffold/ast"
 	"log"
 	"testing"
+
+	"github.com/boourns/scaffold/ast"
 )
 
 func TestSqlCreateTable(t *testing.T) {

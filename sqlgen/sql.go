@@ -2,10 +2,16 @@ package sqlgen
 
 import (
 	"fmt"
+
 	"github.com/boourns/scaffold/ast"
 )
 
 func sqlType(field ast.Field) string {
+	override := field.Override("sqlType", "")
+	if override != "" {
+		return override
+	}
+
 	var sql string
 	switch field.Type {
 	case "string", "[]byte":
@@ -14,8 +20,10 @@ func sqlType(field ast.Field) string {
 		sql = "INTEGER"
 	case "bool":
 		sql = "BOOLEAN"
+	case "time.Time":
+		sql = "DATETIME"
 	default:
-		panic(fmt.Sprintf("Don't know sql type for %s", field.Type))
+		panic(fmt.Sprintf("Don't know sql type for %s, field %v", field.Type, field))
 	}
 
 	if field.Name == "ID" {

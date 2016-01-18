@@ -1,9 +1,6 @@
 package ast
 
-import (
-	"encoding/json"
-	"fmt"
-)
+import "strings"
 
 type Field struct {
 	Name            string
@@ -26,6 +23,19 @@ func (f *Field) Override(key string, def string) string {
 
 func (f *Field) parseOverrides() {
 	f.overridesParsed = true
-	fmt.Printf("tag %s", f.Tag)
-	json.Unmarshal([]byte(f.Tag), &f.overrides)
+	f.overrides = make(map[string]string)
+	fields := strings.Split(f.Tag, ",")
+
+	for _, field := range fields {
+		if field == "" {
+			continue
+		}
+		kv := strings.Split(field, ":")
+		if len(kv) != 2 {
+		}
+		key := strings.Trim(kv[0], " \t")
+		value := strings.Trim(kv[1], " \t")
+		f.overrides[key] = value
+	}
+
 }
