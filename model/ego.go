@@ -108,14 +108,22 @@ _, _ = io.WriteString(w, ")\")\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\n
 //line model.go.ego:74
 _, _ = fmt.Fprintf(w, "%v",  fieldString("s.", m.FieldSliceWithoutID(), "") )
 //line model.go.ego:74
-_, _ = io.WriteString(w, ")\n\t\tif err != nil {\n\t\t\treturn err\n    }\n\n    s.ID, err = result.LastInsertId()\n    if err != nil {\n      return err\n    }\n\t  return nil\n}\n\nfunc Create")
+_, _ = io.WriteString(w, ")\n\t\tif err != nil {\n\t\t\treturn err\n    }\n\n    s.ID, err = result.LastInsertId()\n    if err != nil {\n      return err\n    }\n\t  return nil\n}\n\nfunc (s *")
 //line model.go.ego:86
 _, _ = fmt.Fprintf(w, "%v",  m.Name )
 //line model.go.ego:86
+_, _ = io.WriteString(w, ") Delete(tx dbutil.DBLike) error {\n\t\tstmt, err := tx.Prepare(\"DELETE FROM ")
+//line model.go.ego:87
+_, _ = fmt.Fprintf(w, "%v",  m.Name )
+//line model.go.ego:87
+_, _ = io.WriteString(w, " WHERE ID = ?\")\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\n\t\t_, err = stmt.Exec(s.ID)\n\t\tif err != nil {\n\t\t\treturn err\n    }\n\n\t  return nil\n}\n\nfunc Create")
+//line model.go.ego:100
+_, _ = fmt.Fprintf(w, "%v",  m.Name )
+//line model.go.ego:100
 _, _ = io.WriteString(w, "Table(tx dbutil.DBLike) error {\n\t\tstmt, err := tx.Prepare(`")
-//line model.go.ego:87
+//line model.go.ego:101
 _, _ = fmt.Fprintf(w, "%v",  sqlgen.CreateTable(m) )
-//line model.go.ego:87
+//line model.go.ego:101
 _, _ = io.WriteString(w, "`)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\n\t\t_, err = stmt.Exec()\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t  return nil\n}\n")
 return nil
 }

@@ -83,6 +83,20 @@ func (s *<%== m.Name %>) Insert(tx dbutil.DBLike) error {
 	  return nil
 }
 
+func (s *<%== m.Name %>) Delete(tx dbutil.DBLike) error {
+		stmt, err := tx.Prepare("DELETE FROM <%== m.Name %> WHERE ID = ?")
+		if err != nil {
+			return err
+		}
+
+		_, err = stmt.Exec(s.ID)
+		if err != nil {
+			return err
+    }
+
+	  return nil
+}
+
 func Create<%== m.Name %>Table(tx dbutil.DBLike) error {
 		stmt, err := tx.Prepare(`<%== sqlgen.CreateTable(m) %>`)
 		if err != nil {
