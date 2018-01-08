@@ -1,11 +1,15 @@
-<%! func modelTemplate(w io.Writer, m *ast.Model) error %>
-
-<%% import (
+<%
+  package model
+  
+ import (
   "strings"
   "github.com/boourns/scaffold/ast"
   "github.com/boourns/scaffold/util"
   "github.com/boourns/scaffold/sqlgen"
-)%%>
+  )
+ 
+ func modelTemplate(w io.Writer, m *ast.Model) error {
+%>
 
 package <%== strings.ToLower(m.Package) %>
 
@@ -109,3 +113,4 @@ func Create<%== m.Name %>Table(tx dbutil.DBLike) error {
 		}
 	  return nil
 }
+<% } %>
