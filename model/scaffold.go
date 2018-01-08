@@ -39,15 +39,12 @@ func (c model) Generate(flags *flag.FlagSet) error {
 	fmt.Println("- Found package", m.Package, "struct", m.Name)
 
 	out := bytes.NewBuffer(nil)
-	err := modelTemplate(out, m)
-	if err != nil {
-		return fmt.Errorf("Error generating sql template: %s", err)
-	}
+	modelTemplate(out, m)
 
 	outFileName := fmt.Sprintf("%s_sql.go", strings.ToLower(m.Name))
 
 	fmt.Println("- Saving as", outFileName)
-	err = ioutil.WriteFile(outFileName, []byte(out.Bytes()), 0644)
+	err := ioutil.WriteFile(outFileName, []byte(out.Bytes()), 0644)
 
 	if err != nil {
 		return fmt.Errorf("Error writing file: %s", err)

@@ -2,7 +2,7 @@
 
 set -e
 
-ego
+ego .
 
 pushd ../cmd/scaffold/
 go build
