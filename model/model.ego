@@ -1,0 +1,116 @@
+<%
+  package model
+  
+ import (
+  "strings"
+  "github.com/boourns/scaffold/ast"
+  "github.com/boourns/scaffold/util"
+  "github.com/boourns/scaffold/sqlgen"
+  )
+ 
+ func modelTemplate(w io.Writer, m *ast.Model) {
+%>
+
+package <%== strings.ToLower(m.Package) %>
+
+import (
+	"github.com/boourns/dbutil"
+  "database/sql"
+  "fmt"
+)
+
+func sqlFieldsFor<%== m.Name %>() string {
+  return "<%== util.StringJoin(m.FieldSlice(), ", ") %>"
+}
+
+func load<%== m.Name %>(rows *sql.Rows) (*<%== m.Name %>, error) {
+	ret := <%== m.Name %>{}
+
+	err := rows.Scan(<%== fieldString("&ret.", m.FieldSlice(), "") %>)
+	if err != nil {
+		return nil, err
+	}
+	return &ret, nil
+}
+
+func Select<%== m.Name %>(tx dbutil.DBLike, cond string, condFields ...interface{}) ([]*<%== m.Name %>, error) {
+  ret := []*<%==m.Name%>{}
+  sql := fmt.Sprintf("SELECT %s from <%== m.Name %> %s", sqlFieldsFor<%==m.Name%>(), cond)
+	rows, err := tx.Query(sql, condFields...)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+    item, err := load<%== m.Name %>(rows)
+    if err != nil {
+      return nil, err
+    }
+    ret = append(ret, item)
+  }
+  rows.Close()
+  return ret, nil
+}
+
+func (s *<%== m.Name %>) Update(tx dbutil.DBLike) error {
+		stmt, err := tx.Prepare(fmt.Sprintf("UPDATE <%== m.Name %>(%s) VALUES(<%== util.QuestionMarks(len(m.FieldSlice())) %>) WHERE <%== m.Name %>.ID = ?", sqlFieldsFor<%==m.Name%>()))
+
+		if err != nil {
+			return err
+		}
+
+    params := []interface{}{<%== fieldString("s.", m.FieldSlice(), "") %>}
+    params = append(params, s.ID)
+
+		_, err = stmt.Exec(params...)
+		if err != nil {
+			return err
+		}
+
+    return nil
+}
+
+func (s *<%== m.Name %>) Insert(tx dbutil.DBLike) error {
+		stmt, err := tx.Prepare("INSERT INTO <%== m.Name %>(<%== fieldString("", m.FieldSliceWithoutID(), "") %>) VALUES(<%== util.QuestionMarks(len(m.FieldSliceWithoutID())) %>)")
+		if err != nil {
+			return err
+		}
+
+		result, err := stmt.Exec(<%== fieldString("s.", m.FieldSliceWithoutID(), "") %>)
+		if err != nil {
+			return err
+    }
+
+    s.ID, err = result.LastInsertId()
+    if err != nil {
+      return err
+    }
+	  return nil
+}
+
+func (s *<%== m.Name %>) Delete(tx dbutil.DBLike) error {
+		stmt, err := tx.Prepare("DELETE FROM <%== m.Name %> WHERE ID = ?")
+		if err != nil {
+			return err
+		}
+
+		_, err = stmt.Exec(s.ID)
+		if err != nil {
+			return err
+    }
+
+	  return nil
+}
+
+func Create<%== m.Name %>Table(tx dbutil.DBLike) error {
+		stmt, err := tx.Prepare(`<%== sqlgen.CreateTable(m) %>`)
+		if err != nil {
+			return err
+		}
+
+		_, err = stmt.Exec()
+		if err != nil {
+			return err
+		}
+	  return nil
+}
+<% } %>
