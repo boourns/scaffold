@@ -7,7 +7,7 @@
   "github.com/boourns/scaffold/sqlgen"
 )%%>
 
-package <%== strings.ToLower(m.Name) %>
+package <%== strings.ToLower(m.Package) %>
 
 import (
 	"github.com/boourns/dbutil"
@@ -29,7 +29,7 @@ func load<%== m.Name %>(rows *sql.Rows) (*<%== m.Name %>, error) {
 	return &ret, nil
 }
 
-func Select(tx dbutil.DBLike, cond string, condFields ...interface{}) ([]*<%== m.Name %>, error) {
+func Select<%== m.Name %>(tx dbutil.DBLike, cond string, condFields ...interface{}) ([]*<%== m.Name %>, error) {
   ret := []*<%==m.Name%>{}
   sql := fmt.Sprintf("SELECT %s from <%== m.Name %> %s", sqlFieldsFor<%==m.Name%>(), cond)
 	rows, err := tx.Query(sql, condFields...)

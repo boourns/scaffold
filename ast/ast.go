@@ -12,7 +12,7 @@ type Model struct {
 	Name            string
 	Package         string
 	Fields          []Field
-	parsedStruct bool
+	parsedStruct    bool
 	parsedOverrides bool
 }
 
@@ -35,34 +35,34 @@ func (v *Model) Visit(node ast.Node) (w ast.Visitor) {
 		switch t := node.(type) {
 		case *ast.File:
 			v.Package = t.Name.Name
-			
+
 		case *ast.TypeSpec:
 			str, ok1 := t.Type.(*ast.StructType)
 
 			if ok1 {
-  			  v.Name = t.Name.Name
+				v.Name = t.Name.Name
 
-			for _, inp := range str.Fields.List {
-				var out Field
-				if inp.Type != nil {
-					typ, ok := (inp.Type).(*ast.Ident)
-					if ok {
-						out.Type = typ.Name
+				for _, inp := range str.Fields.List {
+					var out Field
+					if inp.Type != nil {
+						typ, ok := (inp.Type).(*ast.Ident)
+						if ok {
+							out.Type = typ.Name
+						}
 					}
+					if inp.Tag != nil {
+						out.Tag = strings.Replace(inp.Tag.Value, "`", "", -1)
+					}
+					if len(inp.Names) == 1 {
+						out.Name = inp.Names[0].Name
+					} else {
+						panic("Couldn't find field name")
+					}
+					v.Fields = append(v.Fields, out)
 				}
-				if inp.Tag != nil {
-					out.Tag = strings.Replace(inp.Tag.Value, "`", "", -1)
-				}
-				if len(inp.Names) == 1 {
-					out.Name = inp.Names[0].Name
-				} else {
-					panic("Couldn't find field name")
-				}
-				v.Fields = append(v.Fields, out)
+				v.parsedStruct = true
 			}
-			v.parsedStruct = true
 		}
-	}
 	}
 
 	return v
