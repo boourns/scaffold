@@ -52,7 +52,7 @@ func Select<%== m.Name %>(tx dbutil.DBLike, cond string, condFields ...interface
 }
 
 func (s *<%== m.Name %>) Update(tx dbutil.DBLike) error {
-		stmt, err := tx.Prepare(fmt.Sprintf("UPDATE <%== m.Name %>(%s) VALUES(<%== util.QuestionMarks(len(m.FieldSlice())) %>) WHERE <%== m.Name %>.ID = ?", sqlFieldsFor<%==m.Name%>()))
+		stmt, err := tx.Prepare(fmt.Sprintf("UPDATE <%== m.Name %> SET <%== fieldString("", m.FieldSlice(), "=?") %> WHERE <%== m.Name %>.ID = ?", ))
 
 		if err != nil {
 			return err
