@@ -6,6 +6,7 @@
   "github.com/boourns/scaffold/ast"
   "github.com/boourns/scaffold/util"
   "github.com/boourns/scaffold/sqlgen"
+  "fmt"
   )
  
  func modelTemplate(w io.Writer, m *ast.Model) {
@@ -20,13 +21,13 @@ import (
 )
 
 func sqlFieldsFor<%== m.Name %>() string {
-  return "<%== util.StringJoin(m.FieldSlice(), ", ") %>"
+  return "<%== fieldString(fmt.Sprintf("%s.", m.Name), m.FieldSlice(), "") %>" // ADD FIELD HERE
 }
 
 func load<%== m.Name %>(rows *sql.Rows) (*<%== m.Name %>, error) {
 	ret := <%== m.Name %>{}
 
-	err := rows.Scan(<%== fieldString("&ret.", m.FieldSlice(), "") %>)
+	err := rows.Scan(<%== fieldString("&ret.", m.FieldSlice(), "") %>) // ADD FIELD HERE
 	if err != nil {
 		return nil, err
 	}
@@ -52,13 +53,13 @@ func Select<%== m.Name %>(tx dbutil.DBLike, cond string, condFields ...interface
 }
 
 func (s *<%== m.Name %>) Update(tx dbutil.DBLike) error {
-		stmt, err := tx.Prepare(fmt.Sprintf("UPDATE <%== m.Name %> SET <%== fieldString("", m.FieldSlice(), "=?") %> WHERE <%== m.Name %>.ID = ?", ))
+		stmt, err := tx.Prepare(fmt.Sprintf("UPDATE <%== m.Name %> SET <%== fieldString("", m.FieldSlice(), "=?") %> WHERE <%== m.Name %>.ID = ?", )) // ADD FIELD HERE
 
 		if err != nil {
 			return err
 		}
 
-    params := []interface{}{<%== fieldString("s.", m.FieldSlice(), "") %>}
+    params := []interface{}{<%== fieldString("s.", m.FieldSlice(), "") %>} // ADD FIELD HERE
     params = append(params, s.ID)
 
 		_, err = stmt.Exec(params...)
@@ -70,12 +71,12 @@ func (s *<%== m.Name %>) Update(tx dbutil.DBLike) error {
 }
 
 func (s *<%== m.Name %>) Insert(tx dbutil.DBLike) error {
-		stmt, err := tx.Prepare("INSERT INTO <%== m.Name %>(<%== fieldString("", m.FieldSliceWithoutID(), "") %>) VALUES(<%== util.QuestionMarks(len(m.FieldSliceWithoutID())) %>)")
+		stmt, err := tx.Prepare("INSERT INTO <%== m.Name %>(<%== fieldString("", m.FieldSliceWithoutID(), "") %>) VALUES(<%== util.QuestionMarks(len(m.FieldSliceWithoutID())) %>)") // ADD FIELD HERE
 		if err != nil {
 			return err
 		}
 
-		result, err := stmt.Exec(<%== fieldString("s.", m.FieldSliceWithoutID(), "") %>)
+		result, err := stmt.Exec(<%== fieldString("s.", m.FieldSliceWithoutID(), "") %>) // ADD FIELD HERE
 		if err != nil {
 			return err
     }

@@ -32,6 +32,7 @@ func (f *Field) parseOverrides() {
 		}
 		kv := strings.Split(field, ":")
 		if len(kv) != 2 {
+			continue
 		}
 		key := strings.Trim(kv[0], " \t")
 		value := strings.Trim(kv[1], " \t")
