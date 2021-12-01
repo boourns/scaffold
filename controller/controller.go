@@ -16,6 +16,8 @@ func (c controller) Generate(flags *flag.FlagSet) error {
 
 	// todo save
 
+	// 🥰
+
 	return nil
 }
 
