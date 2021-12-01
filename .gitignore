@@ -1,4 +1,4 @@
-cmd/scaffold/scaffold
+scaffold
 example/example
 model/test/user_model.go
 model/test/user_sql.go
