@@ -6,9 +6,13 @@ import (
 )
 
 func QuestionMarks(num int) string {
-	slice := []string{}
-	for i := 0; i < num; i++ {
-		slice = append(slice, "?")
+	if num < 1 {
+		return ""
+	}
+	slice := make([]string, num)
+	slice[0] = "?"
+	for i := 1; i < len(slice); i *= 2 {
+		copy(slice[i:], slice[:i])
 	}
 	return strings.Join(slice, ",")
 }
