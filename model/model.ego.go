@@ -11,9 +11,9 @@ import "io"
 import "context"
 
 import (
-	"github.com/boourns/scaffold/ast"
-	"github.com/boourns/scaffold/sqlgen"
-	"github.com/boourns/scaffold/util"
+	"scaffold/ast"
+	"scaffold/sqlgen"
+	"scaffold/util"
 	"strings"
 )
 

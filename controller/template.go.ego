@@ -1,7 +1,7 @@
 <%! func controllerTemplate(w io.Writer, m *ast.Model) error %>
 
 <%% import (
-  "github.com/boourns/scaffold/ast"
+  "scaffold/ast"
 )
   %%>
 

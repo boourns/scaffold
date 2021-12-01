@@ -20,7 +20,7 @@ func Parse(filename string) *Model {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filename, nil, 0)
 	if err != nil {
-		fmt.Println("Oops! Can't parse the source: %vn", err)
+		fmt.Printf("Oops! Can't parse the source: %v\n", err)
 		return nil
 	}
 

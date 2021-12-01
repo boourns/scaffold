@@ -2,8 +2,8 @@ package controller
 
 import (
 	"fmt"
-	"github.com/boourns/scaffold/ast"
 	"io"
+	"scaffold/ast"
 )
 
 //line controller.go.ego:1

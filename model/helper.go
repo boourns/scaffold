@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/boourns/scaffold/util"
+	"scaffold/util"
 )
 
 func fieldString(prefix string, list []string, suffix string) string {

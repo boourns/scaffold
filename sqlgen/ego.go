@@ -1,9 +1,11 @@
 package sqlgen
+
 import (
-"fmt"
-"io"
-"github.com/boourns/scaffold/ast"
+	"fmt"
+	"io"
+	"scaffold/ast"
 )
+
 //line create_table.sql.ego:1
  func createTableSQL(w io.Writer, m *ast.Model) error  {
 //line create_table.sql.ego:2
