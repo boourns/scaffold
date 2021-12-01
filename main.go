@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"scaffold/ast"
-	"scaffold/controller"
 	"scaffold/model"
 	"scaffold/static"
 )
@@ -13,9 +12,8 @@ import (
 var flags *flag.FlagSet
 
 var scaffolds = map[string]ast.Scaffold{
-	"controller": controller.Scaffold,
-	"model":      model.Scaffold,
-	"static":     static.Scaffold,
+	"model":  model.Scaffold,
+	"static": static.Scaffold,
 }
 
 func init() {
