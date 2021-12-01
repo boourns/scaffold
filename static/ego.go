@@ -2,25 +2,27 @@
 // DO NOT EDIT
 
 package static
+
 import (
-"fmt"
-"io"
+	"fmt"
+	"io"
 )
+
 //line static.go.ego:1
- func staticTemplate(w io.Writer, dir string, pck string) error  {
+func staticTemplate(w io.Writer, dir string, pck string) error {
 //line static.go.ego:2
-_, _ = fmt.Fprint(w, "\n\npackage ")
+	_, _ = fmt.Fprint(w, "\n\npackage ")
 //line static.go.ego:3
-_, _ = fmt.Fprintf(w, "%v",  pck )
+	_, _ = fmt.Fprintf(w, "%v", pck)
 //line static.go.ego:4
-_, _ = fmt.Fprint(w, "\n\nimport (\n\t\"net/http\"\n)\n\nfunc init() {\n  fs := http.FileServer(http.Dir(\"")
+	_, _ = fmt.Fprint(w, "\n\nimport (\n\t\"net/http\"\n)\n\nfunc init() {\n  fs := http.FileServer(http.Dir(\"")
 //line static.go.ego:10
-_, _ = fmt.Fprintf(w, "%v",  dir )
+	_, _ = fmt.Fprintf(w, "%v", dir)
 //line static.go.ego:10
-_, _ = fmt.Fprint(w, "\"))\n  http.Handle(\"/")
+	_, _ = fmt.Fprint(w, "\"))\n  http.Handle(\"/")
 //line static.go.ego:11
-_, _ = fmt.Fprintf(w, "%v",  dir )
+	_, _ = fmt.Fprintf(w, "%v", dir)
 //line static.go.ego:11
-_, _ = fmt.Fprint(w, "\", fs)\n}")
-return nil
+	_, _ = fmt.Fprint(w, "\", fs)\n}")
+	return nil
 }
