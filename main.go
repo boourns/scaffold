@@ -24,7 +24,7 @@ func init() {
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("Scaffold missing. Usage:", os.Args[0], "<scaffold name>\n")
+		fmt.Println("Scaffold missing. Usage:", os.Args[0], "<scaffold name>")
 		printValidScaffolds()
 
 		flags.PrintDefaults()
@@ -34,7 +34,7 @@ func main() {
 	scaffoldName := os.Args[1]
 	scaffold, ok := scaffolds[scaffoldName]
 	if !ok {
-		fmt.Println("Invalid scaffold: %s", scaffoldName)
+		fmt.Printf("Invalid scaffold: %s", scaffoldName)
 		printValidScaffolds()
 	}
 
