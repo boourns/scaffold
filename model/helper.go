@@ -2,8 +2,9 @@ package model
 
 import (
 	"scaffold/util"
+	"strings"
 )
 
 func fieldString(prefix string, list []string, suffix string) string {
-	return util.StringJoin(util.Transform(prefix, list, suffix), ",")
+	return strings.Join(util.Transform(prefix, list, suffix), ",")
 }

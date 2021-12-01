@@ -2,25 +2,15 @@ package util
 
 import (
 	"fmt"
+	"strings"
 )
-
-func StringJoin(fields []string, joiner string) string {
-	out := ""
-	for i, v := range fields {
-		if i == len(fields)-1 {
-			joiner = ""
-		}
-		out = fmt.Sprintf("%s%s%s", out, v, joiner)
-	}
-	return out
-}
 
 func QuestionMarks(num int) string {
 	slice := []string{}
 	for i := 0; i < num; i++ {
 		slice = append(slice, "?")
 	}
-	return StringJoin(slice, ",")
+	return strings.Join(slice, ",")
 }
 
 func TransformFunc(fields []string, trans func(string) string) []string {
