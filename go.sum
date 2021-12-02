@@ -1,0 +1,6 @@
+github.com/boourns/dbutil v0.0.0-20180112152050-76d5facac2d7 h1:wjBQPx6VjGUy2D61J+lgYN0jZ6G2ErlLu8NFOy0288I=
+github.com/boourns/dbutil v0.0.0-20180112152050-76d5facac2d7/go.mod h1:bsORD7SMfj1IdCeQ0K6P6tjzOwXMfoEKrUpNTB4JNWc=
+github.com/go-sql-driver/mysql v1.6.0 h1:BCTh4TKNUYmOmMUcQ3IipzF5prigylS7XXjEkfCHuOE=
+github.com/go-sql-driver/mysql v1.6.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
+github.com/mattn/go-sqlite3 v1.14.9 h1:10HX2Td0ocZpYEjhilsuo6WWtUqttj2Kb0KtD86/KYA=
+github.com/mattn/go-sqlite3 v1.14.9/go.mod h1:NyWgC/yNuGj7Q9rpYnZvas74GogHl5/Z4A/KQRfk6bU=

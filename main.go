@@ -3,19 +3,17 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/boourns/scaffold/ast"
-	"github.com/boourns/scaffold/controller"
-	"github.com/boourns/scaffold/model"
-	"github.com/boourns/scaffold/static"
 	"os"
+	"scaffold/ast"
+	"scaffold/model"
+	"scaffold/static"
 )
 
 var flags *flag.FlagSet
 
 var scaffolds = map[string]ast.Scaffold{
-	"controller": controller.Scaffold,
-	"model":      model.Scaffold,
-	"static":     static.Scaffold,
+	"model":  model.Scaffold,
+	"static": static.Scaffold,
 }
 
 func init() {
@@ -24,7 +22,7 @@ func init() {
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("Scaffold missing. Usage:", os.Args[0], "<scaffold name>\n")
+		fmt.Println("Scaffold missing. Usage:", os.Args[0], "<scaffold name>")
 		printValidScaffolds()
 
 		flags.PrintDefaults()
@@ -34,7 +32,7 @@ func main() {
 	scaffoldName := os.Args[1]
 	scaffold, ok := scaffolds[scaffoldName]
 	if !ok {
-		fmt.Println("Invalid scaffold: %s", scaffoldName)
+		fmt.Printf("Invalid scaffold: %s", scaffoldName)
 		printValidScaffolds()
 	}
 

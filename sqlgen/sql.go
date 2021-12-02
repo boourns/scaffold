@@ -3,7 +3,7 @@ package sqlgen
 import (
 	"fmt"
 
-	"github.com/boourns/scaffold/ast"
+	"scaffold/ast"
 )
 
 func sqlType(field ast.Field) string {
