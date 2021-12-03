@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
+	"github.com/boourns/scaffold/ast"
 	"io/ioutil"
 	"os"
-	"scaffold/ast"
 	"strings"
 )
 

@@ -1,7 +1,7 @@
 package model
 
 import (
-	"scaffold/util"
+	"github.com/boourns/scaffold/util"
 	"strings"
 )
 

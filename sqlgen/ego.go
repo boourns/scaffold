@@ -2,8 +2,8 @@ package sqlgen
 
 import (
 	"fmt"
+	"github.com/boourns/scaffold/ast"
 	"io"
-	"scaffold/ast"
 )
 
 //line create_table.sql.ego:1

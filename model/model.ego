@@ -3,9 +3,9 @@
   
  import (
   "strings"
-  "scaffold/ast"
-  "scaffold/util"
-  "scaffold/sqlgen"
+  "github.com/boourns/scaffold/ast"
+  "github.com/boourns/scaffold/util"
+  "github.com/boourns/scaffold/sqlgen"
   "fmt"
   )
  

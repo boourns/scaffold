@@ -4,7 +4,7 @@ import (
 	"log"
 	"testing"
 
-	"scaffold/ast"
+	"github.com/boourns/scaffold/ast"
 )
 
 func TestSqlCreateTable(t *testing.T) {

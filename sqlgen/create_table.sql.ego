@@ -2,7 +2,7 @@
 
 <%% 
 import (
-  "scaffold/ast"
+  "github.com/boourns/scaffold/ast"
 )
 %%>
 

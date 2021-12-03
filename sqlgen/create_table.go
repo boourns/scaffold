@@ -3,7 +3,7 @@ package sqlgen
 import (
 	"bytes"
 	"fmt"
-	"scaffold/ast"
+	"github.com/boourns/scaffold/ast"
 )
 
 func CreateTable(m *ast.Model) string {
