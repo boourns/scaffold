@@ -1,4 +1,4 @@
-module scaffold
+module github.com/boourns/scaffold
 
 go 1.17
 
