@@ -15,7 +15,7 @@
 package <%== strings.ToLower(m.Package) %>
 
 import (
-	"github.com/boourns/dbutil"
+	"github.com/boourns/dblib"
   "database/sql"
   "fmt"
 )
@@ -34,7 +34,7 @@ func load<%== m.Name %>(rows *sql.Rows) (*<%== m.Name %>, error) {
 	return &ret, nil
 }
 
-func Select<%== m.Name %>(tx dbutil.DBLike, cond string, condFields ...interface{}) ([]*<%== m.Name %>, error) {
+func Select<%== m.Name %>(tx dblib.DBLike, cond string, condFields ...interface{}) ([]*<%== m.Name %>, error) {
   ret := []*<%==m.Name%>{}
   sql := fmt.Sprintf("SELECT %s from <%== m.Name %> %s", sqlFieldsFor<%==m.Name%>(), cond)
 	rows, err := tx.Query(sql, condFields...)
@@ -52,7 +52,7 @@ func Select<%== m.Name %>(tx dbutil.DBLike, cond string, condFields ...interface
   return ret, nil
 }
 
-func (s *<%== m.Name %>) Update(tx dbutil.DBLike) error {
+func (s *<%== m.Name %>) Update(tx dblib.DBLike) error {
 		stmt, err := tx.Prepare(fmt.Sprintf("UPDATE <%== m.Name %> SET <%== fieldString("", m.FieldSlice(), "=?") %> WHERE <%== m.Name %>.ID = ?", )) // ADD FIELD HERE
 
 		if err != nil {
@@ -70,7 +70,7 @@ func (s *<%== m.Name %>) Update(tx dbutil.DBLike) error {
     return nil
 }
 
-func (s *<%== m.Name %>) Insert(tx dbutil.DBLike) error {
+func (s *<%== m.Name %>) Insert(tx dblib.DBLike) error {
 		stmt, err := tx.Prepare("INSERT INTO <%== m.Name %>(<%== fieldString("", m.FieldSliceWithoutID(), "") %>) VALUES(<%== util.QuestionMarks(len(m.FieldSliceWithoutID())) %>)") // ADD FIELD HERE
 		if err != nil {
 			return err
@@ -88,7 +88,7 @@ func (s *<%== m.Name %>) Insert(tx dbutil.DBLike) error {
 	  return nil
 }
 
-func (s *<%== m.Name %>) Delete(tx dbutil.DBLike) error {
+func (s *<%== m.Name %>) Delete(tx dblib.DBLike) error {
 		stmt, err := tx.Prepare("DELETE FROM <%== m.Name %> WHERE ID = ?")
 		if err != nil {
 			return err
@@ -102,7 +102,7 @@ func (s *<%== m.Name %>) Delete(tx dbutil.DBLike) error {
 	  return nil
 }
 
-func Create<%== m.Name %>Table(tx dbutil.DBLike) error {
+func Create<%== m.Name %>Table(tx dblib.DBLike) error {
 		stmt, err := tx.Prepare(`<%== sqlgen.CreateTable(m) %>`)
 		if err != nil {
 			return err

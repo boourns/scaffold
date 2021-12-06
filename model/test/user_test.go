@@ -3,7 +3,7 @@ package user
 import (
 	"database/sql"
 	"fmt"
-	"github.com/boourns/dbutil"
+	"github.com/boourns/dblib"
 	_ "github.com/mattn/go-sqlite3"
 	"os"
 	"testing"
@@ -16,7 +16,7 @@ func init() {
 	if url == "" {
 		panic("TEST_DATABASE_URL is not set, expected sqlite3://test.db")
 	}
-	db = dbutil.Connect(url)
+	db = dblib.Connect(url)
 }
 
 func TestUserCreateTable(t *testing.T) {
