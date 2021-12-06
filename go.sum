@@ -1,4 +1,6 @@
 github.com/boourns/dblib v0.0.0-20211206180544-93e2239e21d3 h1:Z4eGgTPTsTxViSuIGtBe0ltRiOFUId7pmOf3EBqR5u8=
 github.com/boourns/dblib v0.0.0-20211206180544-93e2239e21d3/go.mod h1:5DIzBnupyRy4Nwpd7i5UIgQJ9MUERVr/jDnhl+x0GYA=
+github.com/boourns/dblib v0.0.0-20211206181331-595b699a5ede h1:vMNJP2x/uXI78kb5a9UC6eQLi6fteBLQLmE2bLpmzA0=
+github.com/boourns/dblib v0.0.0-20211206181331-595b699a5ede/go.mod h1:5DIzBnupyRy4Nwpd7i5UIgQJ9MUERVr/jDnhl+x0GYA=
 github.com/mattn/go-sqlite3 v1.14.9 h1:10HX2Td0ocZpYEjhilsuo6WWtUqttj2Kb0KtD86/KYA=
 github.com/mattn/go-sqlite3 v1.14.9/go.mod h1:NyWgC/yNuGj7Q9rpYnZvas74GogHl5/Z4A/KQRfk6bU=
