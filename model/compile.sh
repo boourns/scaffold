@@ -1,10 +1,9 @@
 #!/bin/bash
 
-ego
-pushd ../cmd/scaffold
+pushd ..
 go build
 popd
 pushd test
-./test.sh
+../../scaffold model -in=user.go
 popd
 

@@ -2,21 +2,20 @@ package user
 
 import (
 	"database/sql"
-	"fmt"
-	"github.com/boourns/dblib"
-	_ "github.com/mattn/go-sqlite3"
-	"os"
+	"log"
 	"testing"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 var db *sql.DB
 
 func init() {
-	url := os.Getenv("TEST_DATABASE_URL")
-	if url == "" {
-		panic("TEST_DATABASE_URL is not set, expected sqlite3://test.db")
+	database, err := sql.Open("sqlite3", ":memory:")
+	if err != nil {
+		log.Fatal(err)
 	}
-	db = dblib.Connect(url)
+	db = database
 }
 
 func TestUserCreateTable(t *testing.T) {
@@ -48,8 +47,22 @@ func TestUserCreateTable(t *testing.T) {
 	}
 
 	if len(users) != 1 {
-		t.Errorf("Expected 1 user, received %d", len(users))
+		t.Fatalf("expected 1 user, received %d", len(users))
 	}
 
-	fmt.Printf("Received user %#v", users[0])
+	if users[0].ID == 0 {
+		t.Error("expected user to have a valid ID")
+	}
+
+	if users[0].Name != "Tom" {
+		t.Errorf("expected Tom, received %s", users[0].Name)
+	}
+
+	if users[0].Email != "tom@tom.com" {
+		t.Errorf("expected tom@tom.com, received %s", users[0].Email)
+	}
+
+	if users[0].ResetToken != "asdf1234" {
+		t.Errorf("expected asdf1234, received %s", users[0].ResetToken)
+	}
 }
