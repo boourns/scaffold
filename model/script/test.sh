@@ -1,9 +1,8 @@
 #!/bin/bash
 
-pushd ..
-go build
-popd
-pushd test
-../../scaffold model -in=user.go
-popd
+cd test
 
+rm user_sql.go
+../../scaffold model -in=user.go
+
+go test
