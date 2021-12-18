@@ -4,10 +4,12 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
-	"github.com/boourns/scaffold/ast"
+	"go/format"
 	"io/ioutil"
 	"os"
 	"strings"
+
+	"github.com/boourns/scaffold/ast"
 )
 
 type model struct{}
@@ -25,7 +27,7 @@ func (c model) Generate(flags *flag.FlagSet) error {
 	flags.Parse(os.Args[2:])
 
 	if showHelp {
-		fmt.Printf(c.Details())
+		fmt.Print(c.Details())
 		flags.PrintDefaults()
 		return nil
 	}
@@ -41,13 +43,17 @@ func (c model) Generate(flags *flag.FlagSet) error {
 	out := bytes.NewBuffer(nil)
 	modelTemplate(out, m)
 
+	formatted, err := format.Source(out.Bytes())
+	if err != nil {
+		return fmt.Errorf("error formatting file: %s", err)
+	}
+
 	outFileName := fmt.Sprintf("%s_sql.go", strings.ToLower(m.Name))
 
 	fmt.Println("- Saving as", outFileName)
-	err := ioutil.WriteFile(outFileName, []byte(out.Bytes()), 0644)
-
+	err = ioutil.WriteFile(outFileName, formatted, 0644)
 	if err != nil {
-		return fmt.Errorf("Error writing file: %s", err)
+		return fmt.Errorf("error writing file: %s", err)
 	}
 
 	return err
