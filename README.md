@@ -1,4 +1,4 @@
-# scaffold [![Build Status](https://travis-ci.org/boourns/scaffold.svg?branch=master)](https://travis-ci.org/boourns/scaffold)
+# scaffold ![build](https://github.com/boourns/scaffold/actions/workflows/go.yml/badge.svg)
 
 code generator for go
 
