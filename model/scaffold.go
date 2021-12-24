@@ -66,6 +66,6 @@ func (c model) Details() string {
 }
 
 func printError(str string) error {
-	fmt.Printf(Scaffold.Details())
+	fmt.Println(Scaffold.Details())
 	return fmt.Errorf(str)
 }
