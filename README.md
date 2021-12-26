@@ -4,7 +4,7 @@ code generator for go
 
 # Install
 ```bash
-go get github.com/boourns/scaffold/cmd/scaffold
+go get github.com/boourns/scaffold
 ```
 
 # Create a struct
