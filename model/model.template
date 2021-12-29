@@ -1,0 +1,18 @@
+package {{ .Model.Package }}
+
+import (
+  "github.com/boourns/dblib"
+  "database/sql"
+  "fmt"
+)
+
+func sqlFieldsFor{{.Model.Name}}() string {
+  return "{{.FieldString .Model.Name}}" 
+}
+
+func load{{.Model.Name}}(rows *sql.Rows) (*{{.Model.Name}}, error) {
+	ret := {{.Model.Name}}{}
+
+	{{ .FieldString "ret" }}
+}
+

@@ -2,9 +2,11 @@ package model
 
 import (
 	"bytes"
+	"embed"
 	"flag"
 	"fmt"
 	"go/format"
+	"html/template"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -40,10 +42,12 @@ func (c model) Generate(flags *flag.FlagSet) error {
 	m := ast.Parse(inFileName)
 	fmt.Println("- Found package", m.Package, "struct", m.Name)
 
-	out := bytes.NewBuffer(nil)
-	modelTemplate(out, m)
+	modelCode, err := createModel(m)
+	if err != nil {
+		return fmt.Errorf("error generating model file: %s", err)
+	}
 
-	formatted, err := format.Source(out.Bytes())
+	formatted, err := format.Source(modelCode)
 	if err != nil {
 		return fmt.Errorf("error formatting file: %s", err)
 	}
@@ -57,6 +61,24 @@ func (c model) Generate(flags *flag.FlagSet) error {
 	}
 
 	return err
+}
+
+//go:embed "model.template"
+var templatePath embed.FS
+var modelTemplate *template.Template
+
+func createModel(m *ast.Model) ([]byte, error) {
+	if modelTemplate == nil {
+		modelTemplate = template.Must(template.ParseFS(templatePath, "model.template"))
+	}
+
+	data := ModelViewData{
+		Model: m,
+	}
+
+	out := &bytes.Buffer{}
+	err := modelTemplate.Execute(out, data)
+	return out.Bytes(), err
 }
 
 var Scaffold = model{}

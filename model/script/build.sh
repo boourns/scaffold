@@ -1,4 +1,6 @@
 #!/bin/bash
 
-go run github.com/benbjohnson/ego/cmd/ego .
+pushd ..
+go build
+popd
 
