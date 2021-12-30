@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+
 	"github.com/boourns/scaffold/ast"
 	"github.com/boourns/scaffold/model"
 	"github.com/boourns/scaffold/static"
-	"os"
 )
 
 var flags *flag.FlagSet

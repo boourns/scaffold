@@ -33,6 +33,10 @@ func (c model) Generate(flags *flag.FlagSet) error {
 	}
 
 	if inFileName == "" {
+		inFileName = os.Getenv("GOFILE")
+	}
+
+	if inFileName == "" {
 		return printError("Missing input file.")
 	}
 
