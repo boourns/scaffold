@@ -3,16 +3,97 @@ package {{ .Model.Package }}
 import (
   "github.com/boourns/dblib"
   "database/sql"
-  "fmt"
 )
-
-func sqlFieldsFor{{.Model.Name}}() string {
-  return "{{.FieldString .Model.Name}}" 
-}
 
 func load{{.Model.Name}}(rows *sql.Rows) (*{{.Model.Name}}, error) {
 	ret := {{.Model.Name}}{}
 
-	{{ .FieldString "ret" }}
+	err := rows.Scan({{ .FieldString "ret" }})
+  	if err != nil {
+      return nil, err
+    }
+	return &ret, nil
+}
+
+func Select{{.Model.Name}}(tx dblib.DBLike, cond string, condFields ...interface{}) ([]*{{.Model.Name}}, error) {
+  ret := []*{{.Model.Name}}{}
+  sql := `{{.SelectStatement}}` + cond
+	rows, err := tx.Query(sql, condFields...)
+	if err != nil {
+		return nil, err
+	}
+  defer rows.Close()
+	for rows.Next() {
+    item, err := load{{.Model.Name}}(rows)
+    if err != nil {
+      return nil, err
+    }
+    ret = append(ret, item)
+  }
+  
+  return ret, nil
+}
+
+func (m *{{.Model.Name}}) Update(tx dblib.DBLike) error {
+ 		stmt, err := tx.Prepare(`{{.UpdateStatement}}`) 
+
+		if err != nil {
+			return err
+		}
+    
+    params := {{.UpdateParams}}
+
+		_, err = stmt.Exec(params...)
+		if err != nil {
+			return err
+		}
+
+    return nil
+}
+
+func (m *{{.Model.Name}}) Insert(tx dblib.DBLike) error {
+		stmt, err := tx.Prepare(`{{.InsertStatement}}`)
+		if err != nil {
+			return err
+		}
+
+    params := {{.InsertParams}}
+		result, err := stmt.Exec(params...)
+		if err != nil {
+			return err
+    }
+
+    m.ID, err = result.LastInsertId()
+    if err != nil {
+      return err
+    }
+	  return nil
+}
+
+func (m *{{.Model.Name}}) Delete(tx dblib.DBLike) error {
+		stmt, err := tx.Prepare(`DELETE FROM {{.Model.Name}} WHERE ID = ?`)
+		if err != nil {
+			return err
+		}
+
+		_, err = stmt.Exec(m.ID)
+		if err != nil {
+			return err
+    }
+
+	  return nil
+}
+
+func Create{{.Model.Name}}Table(tx dblib.DBLike) error {
+		stmt, err := tx.Prepare(`{{.CreateTable}}`)
+		if err != nil {
+			return err
+		}
+
+		_, err = stmt.Exec()
+		if err != nil {
+			return err
+		}
+	  return nil
 }
 

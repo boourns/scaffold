@@ -49,7 +49,8 @@ func (c model) Generate(flags *flag.FlagSet) error {
 
 	formatted, err := format.Source(modelCode)
 	if err != nil {
-		return fmt.Errorf("error formatting file: %s", err)
+		fmt.Printf("error formatting file: %s\n", err)
+		formatted = modelCode
 	}
 
 	outFileName := fmt.Sprintf("%s_sql.go", strings.ToLower(m.Name))
