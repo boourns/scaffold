@@ -1,6 +1,6 @@
 package user
 
-//go:generate scaffold model
+//go:generate go run github.com/boourns/scaffold model
 
 type User struct {
 	ID         int64
