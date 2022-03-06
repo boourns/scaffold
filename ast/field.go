@@ -24,7 +24,7 @@ func (f *Field) Override(key string, def string) string {
 func (f *Field) parseOverrides() {
 	f.overridesParsed = true
 	f.overrides = make(map[string]string)
-	fields := strings.Split(f.Tag, ",")
+	fields := strings.Split(f.Tag, " ")
 
 	for _, field := range fields {
 		if field == "" {
