@@ -26,7 +26,7 @@ func TestAstOverrides(t *testing.T) {
 	field := model.Fields[1]
 	field.parseOverrides()
 
-	if str := field.Override("field", "wrong default"); str != "yolo" {
+	if str := field.Override("field", "wrong default"); str != "\"yolo\"" {
 		t.Errorf("Overrides loading failed, returned %s overrides %#v", str, field.overrides)
 	}
 }
