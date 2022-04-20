@@ -1,0 +1,11 @@
+[
+  {
+    "type": "go",
+    "output": ".",
+    "suffix": "sql"
+  },
+  {
+    "type": "ts",
+    "output": "."
+  }
+]

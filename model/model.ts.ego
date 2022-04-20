@@ -1,0 +1,39 @@
+<%
+  package model
+  
+ import (
+  "strings"
+  "github.com/boourns/scaffold/ast"
+  //"github.com/boourns/scaffold/util"
+  //"github.com/boourns/scaffold/sqlgen"
+  //"fmt"
+  )
+
+//arrays and slices aren't handled properly.
+func tsTypeForField(f ast.Field) string {
+    switch f.Type {
+        case "int", "int8", "int16",  "int32",  "int64", "uint", "uint8", "uint16", "uint32", "uint64", "uintptr", "byte", "rune", "float32", "float64": 
+            return "number"
+        case "string":
+            return "string"
+        case "bool":
+            return "boolean"
+        default: 
+            return "any" //🤷‍♂️
+    } 
+}
+
+func fieldNameString(m * ast.Model) string {
+    return strings.Join(m.FieldSlice(), ",")
+}
+
+func modelTemplateTS(w io.Writer, m *ast.Model) {
+%>
+class <%== m.Name %> {
+    <% for _, field := range m.Fields { %>
+    <%== field.Name %>: <%== tsTypeForField(field) %> | undefined
+    <%}%>
+    SelectAll: string = "SELECT (<%==fieldNameString(m)%>) FROM <%== m.Name %>"
+    SelectByID: string = "SELECT (<%==fieldNameString(m)%>) FROM <%== m.Name %> WHERE ID=?"
+}
+<%}%> 
