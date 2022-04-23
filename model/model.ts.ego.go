@@ -27,8 +27,22 @@ func tsTypeForField(f ast.Field) string {
 		return "string"
 	case "bool":
 		return "boolean"
+	case "time.Time":
+		return "Date"
 	default:
-		return "any" //🤷‍♂️
+		return tsTypeForSQLType(f)
+	}
+}
+
+func tsTypeForSQLType(f ast.Field) string {
+	override := f.Override("sqlType", "")
+	switch override {
+	case "DATETIME":
+		return "Date"
+	case "TEXT":
+		return "string"
+	default:
+		return "any"
 	}
 }
 
@@ -38,49 +52,49 @@ func fieldNameString(m *ast.Model) string {
 
 func modelTemplateTS(w io.Writer, m *ast.Model) {
 
-//line model.ts.ego:32
+//line model.ts.ego:46
 	_, _ = io.WriteString(w, "\nclass ")
-//line model.ts.ego:32
+//line model.ts.ego:46
 	_, _ = fmt.Fprint(w, m.Name)
-//line model.ts.ego:32
+//line model.ts.ego:46
 	_, _ = io.WriteString(w, " {\n    ")
-//line model.ts.ego:33
+//line model.ts.ego:47
 	for _, field := range m.Fields {
-//line model.ts.ego:34
+//line model.ts.ego:48
 		_, _ = io.WriteString(w, "\n    ")
-//line model.ts.ego:34
+//line model.ts.ego:48
 		_, _ = fmt.Fprint(w, field.Name)
-//line model.ts.ego:34
+//line model.ts.ego:48
 		_, _ = io.WriteString(w, ": ")
-//line model.ts.ego:34
+//line model.ts.ego:48
 		_, _ = fmt.Fprint(w, tsTypeForField(field))
-//line model.ts.ego:34
+//line model.ts.ego:48
 		_, _ = io.WriteString(w, " | undefined\n    ")
-//line model.ts.ego:35
+//line model.ts.ego:49
 	}
-//line model.ts.ego:36
+//line model.ts.ego:50
 	_, _ = io.WriteString(w, "\n    SelectAll: string = \"SELECT (")
-//line model.ts.ego:36
+//line model.ts.ego:50
 	_, _ = fmt.Fprint(w, fieldNameString(m))
-//line model.ts.ego:36
+//line model.ts.ego:50
 	_, _ = io.WriteString(w, ") FROM ")
-//line model.ts.ego:36
+//line model.ts.ego:50
 	_, _ = fmt.Fprint(w, m.Name)
-//line model.ts.ego:36
+//line model.ts.ego:50
 	_, _ = io.WriteString(w, "\"\n    SelectByID: string = \"SELECT (")
-//line model.ts.ego:37
+//line model.ts.ego:51
 	_, _ = fmt.Fprint(w, fieldNameString(m))
-//line model.ts.ego:37
+//line model.ts.ego:51
 	_, _ = io.WriteString(w, ") FROM ")
-//line model.ts.ego:37
+//line model.ts.ego:51
 	_, _ = fmt.Fprint(w, m.Name)
-//line model.ts.ego:37
+//line model.ts.ego:51
 	_, _ = io.WriteString(w, " WHERE ID=?\"\n}\nexport default ")
-//line model.ts.ego:39
+//line model.ts.ego:53
 	_, _ = fmt.Fprint(w, m.Name)
-//line model.ts.ego:40
+//line model.ts.ego:54
 	_, _ = io.WriteString(w, "\n")
-//line model.ts.ego:40
+//line model.ts.ego:54
 }
 
 var _ fmt.Stringer

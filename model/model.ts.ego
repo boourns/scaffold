@@ -18,9 +18,23 @@ func tsTypeForField(f ast.Field) string {
             return "string"
         case "bool":
             return "boolean"
+        case "time.Time":
+            return "Date"
         default: 
-            return "any" //🤷‍♂️
+            return tsTypeForSQLType(f)
     } 
+}
+
+func tsTypeForSQLType(f ast.Field) string {
+    override := f.Override("sqlType", "")
+    switch override {
+        case "DATETIME":
+            return "Date"
+        case "TEXT":
+            return "string"
+        default:
+            return "any"
+    }
 }
 
 func fieldNameString(m * ast.Model) string {

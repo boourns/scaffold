@@ -59,7 +59,6 @@ func (c model) Generate(flags *flag.FlagSet) error {
 
 	for _, mc := range configs {
 		var err error
-		fmt.Println("MC: ", m.Name, mc.ModelType)
 		switch mc.ModelType {
 		case "go":
 			err = writeGoFile(mc, m)
