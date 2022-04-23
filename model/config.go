@@ -32,11 +32,11 @@ func (mf ModelConfig) Path() string {
 
 func (mf ModelConfig) validate() bool {
 	if len(mf.OutputDir) == 0 || len(mf.ModelType) == 0 {
-		log.Println("ModelType and OutputDir cannot be empty")
+		log.Println("type and output properties cannot be empty")
 		return false
 	}
 	if strings.ToLower(mf.ModelType) == "go" && len(mf.FileSuffix) == 0 {
-		log.Println("Go models must specify a FileSuffix to avoid overwriting original model file")
+		log.Println("Go models must specify a suffix to avoid overwriting original model file")
 		return false
 	}
 	return true
