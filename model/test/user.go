@@ -1,5 +1,7 @@
 package user
 
+import "time"
+
 //go:generate go run github.com/boourns/scaffold model -config user.json
 
 type User struct {
@@ -7,4 +9,6 @@ type User struct {
 	Name       string
 	Email      string
 	ResetToken string
+
+	CreatedAt time.Time `sqlType:"DATETIME"`
 }
