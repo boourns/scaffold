@@ -75,8 +75,12 @@ func modelTemplateTS(w io.Writer, m *ast.Model) {
 //line model.ts.ego:37
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ts.ego:37
-	_, _ = io.WriteString(w, " WHERE ID=?\"\n}\n")
+	_, _ = io.WriteString(w, " WHERE ID=?\"\n}\nexport default ")
 //line model.ts.ego:39
+	_, _ = fmt.Fprint(w, m.Name)
+//line model.ts.ego:40
+	_, _ = io.WriteString(w, "\n")
+//line model.ts.ego:40
 }
 
 var _ fmt.Stringer

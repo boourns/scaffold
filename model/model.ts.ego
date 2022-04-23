@@ -36,4 +36,5 @@ class <%== m.Name %> {
     SelectAll: string = "SELECT (<%==fieldNameString(m)%>) FROM <%== m.Name %>"
     SelectByID: string = "SELECT (<%==fieldNameString(m)%>) FROM <%== m.Name %> WHERE ID=?"
 }
+export default <%== m.Name %>
 <%}%> 
