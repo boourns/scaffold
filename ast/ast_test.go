@@ -26,7 +26,7 @@ func TestAstOverrides(t *testing.T) {
 	field := model.Fields[1]
 	field.parseOverrides()
 
-	if str := field.Override("field", "wrong default"); str != "\"yolo\"" {
+	if str := field.Override("field", "wrong default"); str != "yolo" {
 		t.Errorf("Overrides loading failed, returned %s overrides %#v", str, field.overrides)
 	}
 }
@@ -36,10 +36,10 @@ func TestAstOverridesJsonAndSqlType(t *testing.T) {
 	field := model.Fields[2]
 	field.parseOverrides()
 
-	if str := field.Override("json", "wrong default"); str != "\"updatedAt\"" {
+	if str := field.Override("json", "wrong default"); str != "updatedAt" {
 		t.Errorf("Overrides loading failed, returned %s overrides %#v", str, field.overrides)
 	}
-	if str := field.Override("sqlType", "wrong default"); str != "\"DATETIME\"" {
+	if str := field.Override("sqlType", "wrong default"); str != "DATETIME" {
 		t.Errorf("Overrides loading failed, returned %s overrides %#v", str, field.overrides)
 	}
 }

@@ -17,7 +17,7 @@ import (
 	"strings"
 )
 
-func modelTemplate(w io.Writer, m *ast.Model) {
+func modelTemplateGo(w io.Writer, m *ast.Model) {
 
 //line model.ego:14
 	_, _ = io.WriteString(w, "\n\npackage ")

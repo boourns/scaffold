@@ -9,7 +9,7 @@
   "fmt"
   )
  
- func modelTemplate(w io.Writer, m *ast.Model) {
+ func modelTemplateGo(w io.Writer, m *ast.Model) {
 %>
 
 package <%== strings.ToLower(m.Package) %>
