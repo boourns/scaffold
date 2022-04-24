@@ -73,19 +73,19 @@ func modelTemplateTS(w io.Writer, m *ast.Model) {
 //line model.ts.ego:49
 	}
 //line model.ts.ego:50
-	_, _ = io.WriteString(w, "\n    SelectAll: string = \"SELECT (")
+	_, _ = io.WriteString(w, "\n    SelectAll: string = \"SELECT ")
 //line model.ts.ego:50
 	_, _ = fmt.Fprint(w, fieldNameString(m))
 //line model.ts.ego:50
-	_, _ = io.WriteString(w, ") FROM ")
+	_, _ = io.WriteString(w, " FROM ")
 //line model.ts.ego:50
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ts.ego:50
-	_, _ = io.WriteString(w, "\"\n    SelectByID: string = \"SELECT (")
+	_, _ = io.WriteString(w, "\"\n    SelectByID: string = \"SELECT ")
 //line model.ts.ego:51
 	_, _ = fmt.Fprint(w, fieldNameString(m))
 //line model.ts.ego:51
-	_, _ = io.WriteString(w, ") FROM ")
+	_, _ = io.WriteString(w, " FROM ")
 //line model.ts.ego:51
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ts.ego:51
