@@ -38,17 +38,17 @@ func tsTypeForSQLType(f ast.Field) string {
 }
 
 func fieldNameString(m * ast.Model) string {
-    return strings.Join(m.FieldSlice(), ",")
+    return strings.Join(m.FieldSliceInCamelCase(), ",")
 }
 
 func modelTemplateTS(w io.Writer, m *ast.Model) {
 %>
 class <%== m.Name %> {
     <% for _, field := range m.Fields { %>
-    <%== field.Name %>: <%== tsTypeForField(field) %> | undefined
+    <%== field.NameInCamelCase() %>: <%== tsTypeForField(field) %> | undefined
     <%}%>
-    SelectAll: string = "SELECT <%==fieldNameString(m)%> FROM <%== m.Name %>"
-    SelectByID: string = "SELECT <%==fieldNameString(m)%> FROM <%== m.Name %> WHERE ID=?"
+    selectAll: string = "SELECT <%==fieldNameString(m)%> FROM <%== m.Name %>"
+    selectByID: string = "SELECT <%==fieldNameString(m)%> FROM <%== m.Name %> WHERE ID=?"
 }
 export default <%== m.Name %>
 <%}%> 
