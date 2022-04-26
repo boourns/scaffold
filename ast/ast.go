@@ -76,6 +76,14 @@ func (m *Model) FieldSlice() []string {
 	return out
 }
 
+func (m *Model) FieldSliceInCamelCase() []string {
+	out := []string{}
+	for _, v := range m.Fields {
+		out = append(out, v.NameInCamelCase())
+	}
+	return out
+}
+
 func (m *Model) FieldSliceWithoutID() []string {
 	out := []string{}
 	for _, v := range m.Fields {
