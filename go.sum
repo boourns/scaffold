@@ -2,7 +2,5 @@ github.com/benbjohnson/ego v0.4.3 h1:9uO96riax3fhvRBpbUK5cZvZ14u9U4ZcGgrANwppFqs
 github.com/benbjohnson/ego v0.4.3/go.mod h1:Sa5eTS6AJJy62BL2Y4ba70gt0ZayBXw2R5yZUD1ves8=
 github.com/boourns/dblib v0.0.0-20211206181331-595b699a5ede h1:vMNJP2x/uXI78kb5a9UC6eQLi6fteBLQLmE2bLpmzA0=
 github.com/boourns/dblib v0.0.0-20211206181331-595b699a5ede/go.mod h1:5DIzBnupyRy4Nwpd7i5UIgQJ9MUERVr/jDnhl+x0GYA=
-github.com/iancoleman/strcase v0.2.0 h1:05I4QRnGpI0m37iZQRuskXh+w77mr6Z41lwQzuHLwW0=
-github.com/iancoleman/strcase v0.2.0/go.mod h1:iwCmte+B7n89clKwxIoIXy/HfoL7AsD47ZCWhYzw7ho=
 github.com/mattn/go-sqlite3 v1.14.9 h1:10HX2Td0ocZpYEjhilsuo6WWtUqttj2Kb0KtD86/KYA=
 github.com/mattn/go-sqlite3 v1.14.9/go.mod h1:NyWgC/yNuGj7Q9rpYnZvas74GogHl5/Z4A/KQRfk6bU=
