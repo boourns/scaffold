@@ -47,7 +47,7 @@ func tsTypeForSQLType(f ast.Field) string {
 }
 
 func fieldNameString(m *ast.Model) string {
-	return strings.Join(m.FieldSliceInCamelCase(), ",")
+	return strings.Join(m.FieldSlice(), ",")
 }
 
 func modelTemplateTS(w io.Writer, m *ast.Model) {
@@ -63,7 +63,7 @@ func modelTemplateTS(w io.Writer, m *ast.Model) {
 //line model.ts.ego:48
 		_, _ = io.WriteString(w, "\n    ")
 //line model.ts.ego:48
-		_, _ = fmt.Fprint(w, field.NameInCamelCase())
+		_, _ = fmt.Fprint(w, field.Name)
 //line model.ts.ego:48
 		_, _ = io.WriteString(w, ": ")
 //line model.ts.ego:48
@@ -73,7 +73,7 @@ func modelTemplateTS(w io.Writer, m *ast.Model) {
 //line model.ts.ego:49
 	}
 //line model.ts.ego:50
-	_, _ = io.WriteString(w, "\n    selectAll: string = \"SELECT ")
+	_, _ = io.WriteString(w, "\n    SelectAll: string = \"SELECT ")
 //line model.ts.ego:50
 	_, _ = fmt.Fprint(w, fieldNameString(m))
 //line model.ts.ego:50
@@ -81,7 +81,7 @@ func modelTemplateTS(w io.Writer, m *ast.Model) {
 //line model.ts.ego:50
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ts.ego:50
-	_, _ = io.WriteString(w, "\"\n    selectByID: string = \"SELECT ")
+	_, _ = io.WriteString(w, "\"\n    SelectByID: string = \"SELECT ")
 //line model.ts.ego:51
 	_, _ = fmt.Fprint(w, fieldNameString(m))
 //line model.ts.ego:51
