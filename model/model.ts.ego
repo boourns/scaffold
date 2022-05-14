@@ -57,7 +57,7 @@ func modelTemplateTS(w io.Writer, m *ast.Model) {
 %>
 class <%== m.Name %> {
   <% for _, field := range m.Fields { %>
-  <%== field.Name %>: <%== tsTypeForField(field) %> | undefined
+  <%== field.Name %>?: <%== tsTypeForField(field) %>
   <%}%>
   static columns = { <%==fieldsAsColumnDescriptions(m)%> }
   static SelectAll: string = `SELECT <%==fieldsByColumnDescriptions(m)%> FROM <%== m.Name %>`

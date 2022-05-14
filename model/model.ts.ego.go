@@ -77,11 +77,11 @@ func modelTemplateTS(w io.Writer, m *ast.Model) {
 //line model.ts.ego:60
 		_, _ = fmt.Fprint(w, field.Name)
 //line model.ts.ego:60
-		_, _ = io.WriteString(w, ": ")
+		_, _ = io.WriteString(w, "?: ")
 //line model.ts.ego:60
 		_, _ = fmt.Fprint(w, tsTypeForField(field))
-//line model.ts.ego:60
-		_, _ = io.WriteString(w, " | undefined\n  ")
+//line model.ts.ego:61
+		_, _ = io.WriteString(w, "\n  ")
 //line model.ts.ego:61
 	}
 //line model.ts.ego:62
