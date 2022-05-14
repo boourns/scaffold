@@ -1,6 +1,10 @@
 package ast
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/iancoleman/strcase"
+)
 
 type Field struct {
 	Name            string
@@ -39,4 +43,8 @@ func (f *Field) parseOverrides() {
 		f.overrides[key] = value
 	}
 
+}
+
+func (f *Field) NameInCamelCase() string {
+	return strcase.ToLowerCamel(f.Name)
 }

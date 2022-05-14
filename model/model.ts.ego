@@ -37,18 +37,31 @@ func tsTypeForSQLType(f ast.Field) string {
     }
 }
 
-func fieldNameString(m * ast.Model) string {
-    return strings.Join(m.FieldSlice(), ",")
+func fieldsAsColumnDescriptions(m * ast.Model) string {
+    columns := []string{}
+    for _, f := range m.Fields {
+        columns = append(columns, fmt.Sprintf("%s: \"%s.%s\"", f.NameInCamelCase(), m.Name, f.Name))
+    }
+    return strings.Join(columns, ", ")
+}
+
+func fieldsByColumnDescriptions(m * ast.Model) string {
+    columns := []string{}
+    for _, f := range m.Fields {
+        columns = append(columns, fmt.Sprintf("${%s.columns.%s}", m.Name, f.NameInCamelCase()))
+    }
+    return strings.Join(columns, ", ")
 }
 
 func modelTemplateTS(w io.Writer, m *ast.Model) {
 %>
 class <%== m.Name %> {
-    <% for _, field := range m.Fields { %>
-    <%== field.Name %>: <%== tsTypeForField(field) %> | undefined
-    <%}%>
-    static SelectAll: string = "SELECT <%==fieldNameString(m)%> FROM <%== m.Name %>"
-    static SelectByID: string = "SELECT <%==fieldNameString(m)%> FROM <%== m.Name %> WHERE ID=?"
+  <% for _, field := range m.Fields { %>
+  <%== field.Name %>?: <%== tsTypeForField(field) %>
+  <%}%>
+  static columns = { <%==fieldsAsColumnDescriptions(m)%> }
+  static SelectAll: string = `SELECT <%==fieldsByColumnDescriptions(m)%> FROM <%== m.Name %>`
+  static SelectByID: string = `SELECT <%==fieldsByColumnDescriptions(m)%> FROM <%== m.Name %> WHERE ID=?`
 }
 export default <%== m.Name %>
 <%}%> 

@@ -46,55 +46,71 @@ func tsTypeForSQLType(f ast.Field) string {
 	}
 }
 
-func fieldNameString(m *ast.Model) string {
-	return strings.Join(m.FieldSlice(), ",")
+func fieldsAsColumnDescriptions(m *ast.Model) string {
+	columns := []string{}
+	for _, f := range m.Fields {
+		columns = append(columns, fmt.Sprintf("%s: \"%s.%s\"", f.NameInCamelCase(), m.Name, f.Name))
+	}
+	return strings.Join(columns, ", ")
+}
+
+func fieldsByColumnDescriptions(m *ast.Model) string {
+	columns := []string{}
+	for _, f := range m.Fields {
+		columns = append(columns, fmt.Sprintf("${%s.columns.%s}", m.Name, f.NameInCamelCase()))
+	}
+	return strings.Join(columns, ", ")
 }
 
 func modelTemplateTS(w io.Writer, m *ast.Model) {
 
-//line model.ts.ego:46
+//line model.ts.ego:58
 	_, _ = io.WriteString(w, "\nclass ")
-//line model.ts.ego:46
+//line model.ts.ego:58
 	_, _ = fmt.Fprint(w, m.Name)
-//line model.ts.ego:46
-	_, _ = io.WriteString(w, " {\n    ")
-//line model.ts.ego:47
+//line model.ts.ego:58
+	_, _ = io.WriteString(w, " {\n  ")
+//line model.ts.ego:59
 	for _, field := range m.Fields {
-//line model.ts.ego:48
-		_, _ = io.WriteString(w, "\n    ")
-//line model.ts.ego:48
+//line model.ts.ego:60
+		_, _ = io.WriteString(w, "\n  ")
+//line model.ts.ego:60
 		_, _ = fmt.Fprint(w, field.Name)
-//line model.ts.ego:48
-		_, _ = io.WriteString(w, ": ")
-//line model.ts.ego:48
+//line model.ts.ego:60
+		_, _ = io.WriteString(w, "?: ")
+//line model.ts.ego:60
 		_, _ = fmt.Fprint(w, tsTypeForField(field))
-//line model.ts.ego:48
-		_, _ = io.WriteString(w, " | undefined\n    ")
-//line model.ts.ego:49
+//line model.ts.ego:61
+		_, _ = io.WriteString(w, "\n  ")
+//line model.ts.ego:61
 	}
-//line model.ts.ego:50
-	_, _ = io.WriteString(w, "\n    static SelectAll: string = \"SELECT ")
-//line model.ts.ego:50
-	_, _ = fmt.Fprint(w, fieldNameString(m))
-//line model.ts.ego:50
+//line model.ts.ego:62
+	_, _ = io.WriteString(w, "\n  static columns = { ")
+//line model.ts.ego:62
+	_, _ = fmt.Fprint(w, fieldsAsColumnDescriptions(m))
+//line model.ts.ego:62
+	_, _ = io.WriteString(w, " }\n  static SelectAll: string = `SELECT ")
+//line model.ts.ego:63
+	_, _ = fmt.Fprint(w, fieldsByColumnDescriptions(m))
+//line model.ts.ego:63
 	_, _ = io.WriteString(w, " FROM ")
-//line model.ts.ego:50
+//line model.ts.ego:63
 	_, _ = fmt.Fprint(w, m.Name)
-//line model.ts.ego:50
-	_, _ = io.WriteString(w, "\"\n    static SelectByID: string = \"SELECT ")
-//line model.ts.ego:51
-	_, _ = fmt.Fprint(w, fieldNameString(m))
-//line model.ts.ego:51
+//line model.ts.ego:63
+	_, _ = io.WriteString(w, "`\n  static SelectByID: string = `SELECT ")
+//line model.ts.ego:64
+	_, _ = fmt.Fprint(w, fieldsByColumnDescriptions(m))
+//line model.ts.ego:64
 	_, _ = io.WriteString(w, " FROM ")
-//line model.ts.ego:51
+//line model.ts.ego:64
 	_, _ = fmt.Fprint(w, m.Name)
-//line model.ts.ego:51
-	_, _ = io.WriteString(w, " WHERE ID=?\"\n}\nexport default ")
-//line model.ts.ego:53
+//line model.ts.ego:64
+	_, _ = io.WriteString(w, " WHERE ID=?`\n}\nexport default ")
+//line model.ts.ego:66
 	_, _ = fmt.Fprint(w, m.Name)
-//line model.ts.ego:54
+//line model.ts.ego:67
 	_, _ = io.WriteString(w, "\n")
-//line model.ts.ego:54
+//line model.ts.ego:67
 }
 
 var _ fmt.Stringer
