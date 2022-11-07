@@ -32,7 +32,7 @@ func modelTemplateGo(w io.Writer, m *ast.Model) {
 //line model.ego:24
 	_, _ = fmt.Fprint(w, fieldString(fmt.Sprintf("%s.", m.Name), m.FieldSlice(), ""))
 //line model.ego:24
-	_, _ = io.WriteString(w, "\" // ADD FIELD HERE\n}\n\nfunc load")
+	_, _ = io.WriteString(w, "\"\n}\n\nfunc load")
 //line model.ego:27
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:27
@@ -48,7 +48,7 @@ func modelTemplateGo(w io.Writer, m *ast.Model) {
 //line model.ego:30
 	_, _ = fmt.Fprint(w, fieldString("&ret.", m.FieldSlice(), ""))
 //line model.ego:30
-	_, _ = io.WriteString(w, ") // ADD FIELD HERE\n\tif err != nil {\n\t\treturn nil, err\n\t}\n\treturn &ret, nil\n}\n\nfunc Select")
+	_, _ = io.WriteString(w, ")\n\tif err != nil {\n\t\treturn nil, err\n\t}\n\treturn &ret, nil\n}\n\nfunc Select")
 //line model.ego:37
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:37
@@ -76,7 +76,7 @@ func modelTemplateGo(w io.Writer, m *ast.Model) {
 //line model.ego:55
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:55
-	_, _ = io.WriteString(w, ") Update(tx dblib.DBLike) error {\n\t\tstmt, err := tx.Prepare(fmt.Sprintf(\"UPDATE ")
+	_, _ = io.WriteString(w, ") Update(tx dblib.DBLike) error {\n\t\tstmt, err := tx.Prepare(\"UPDATE ")
 //line model.ego:56
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:56
@@ -88,11 +88,11 @@ func modelTemplateGo(w io.Writer, m *ast.Model) {
 //line model.ego:56
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:56
-	_, _ = io.WriteString(w, ".ID = ?\", )) // ADD FIELD HERE\n\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\n    params := []interface{}{")
+	_, _ = io.WriteString(w, ".ID = ?\", )\n\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\n    params := []interface{}{")
 //line model.ego:62
 	_, _ = fmt.Fprint(w, fieldString("s.", m.FieldSlice(), ""))
 //line model.ego:62
-	_, _ = io.WriteString(w, "} // ADD FIELD HERE\n    params = append(params, s.ID)\n\n\t\t_, err = stmt.Exec(params...)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\n    return nil\n}\n\nfunc (s *")
+	_, _ = io.WriteString(w, "}\n    params = append(params, s.ID)\n\n\t\t_, err = stmt.Exec(params...)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\n    return nil\n}\n\nfunc (s *")
 //line model.ego:73
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:73
@@ -108,11 +108,11 @@ func modelTemplateGo(w io.Writer, m *ast.Model) {
 //line model.ego:74
 	_, _ = fmt.Fprint(w, util.QuestionMarks(len(m.FieldSliceWithoutID())))
 //line model.ego:74
-	_, _ = io.WriteString(w, ")\") // ADD FIELD HERE\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\n\t\tresult, err := stmt.Exec(")
+	_, _ = io.WriteString(w, ")\")\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\n\t\tresult, err := stmt.Exec(")
 //line model.ego:79
 	_, _ = fmt.Fprint(w, fieldString("s.", m.FieldSliceWithoutID(), ""))
 //line model.ego:79
-	_, _ = io.WriteString(w, ") // ADD FIELD HERE\n\t\tif err != nil {\n\t\t\treturn err\n    }\n\n    s.ID, err = result.LastInsertId()\n    if err != nil {\n      return err\n    }\n\t  return nil\n}\n\nfunc (s *")
+	_, _ = io.WriteString(w, ")\n\t\tif err != nil {\n\t\t\treturn err\n    }\n\n    s.ID, err = result.LastInsertId()\n    if err != nil {\n      return err\n    }\n\t  return nil\n}\n\nfunc (s *")
 //line model.ego:91
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:91

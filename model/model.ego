@@ -21,13 +21,13 @@ import (
 )
 
 func sqlFieldsFor<%== m.Name %>() string {
-  return "<%== fieldString(fmt.Sprintf("%s.", m.Name), m.FieldSlice(), "") %>" // ADD FIELD HERE
+  return "<%== fieldString(fmt.Sprintf("%s.", m.Name), m.FieldSlice(), "") %>"
 }
 
 func load<%== m.Name %>(rows *sql.Rows) (*<%== m.Name %>, error) {
 	ret := <%== m.Name %>{}
 
-	err := rows.Scan(<%== fieldString("&ret.", m.FieldSlice(), "") %>) // ADD FIELD HERE
+	err := rows.Scan(<%== fieldString("&ret.", m.FieldSlice(), "") %>)
 	if err != nil {
 		return nil, err
 	}
@@ -53,13 +53,13 @@ func Select<%== m.Name %>(tx dblib.DBLike, cond string, condFields ...interface{
 }
 
 func (s *<%== m.Name %>) Update(tx dblib.DBLike) error {
-		stmt, err := tx.Prepare(fmt.Sprintf("UPDATE <%== m.Name %> SET <%== fieldString("", m.FieldSlice(), "=?") %> WHERE <%== m.Name %>.ID = ?", )) // ADD FIELD HERE
+		stmt, err := tx.Prepare("UPDATE <%== m.Name %> SET <%== fieldString("", m.FieldSlice(), "=?") %> WHERE <%== m.Name %>.ID = ?", )
 
 		if err != nil {
 			return err
 		}
 
-    params := []interface{}{<%== fieldString("s.", m.FieldSlice(), "") %>} // ADD FIELD HERE
+    params := []interface{}{<%== fieldString("s.", m.FieldSlice(), "") %>}
     params = append(params, s.ID)
 
 		_, err = stmt.Exec(params...)
@@ -71,12 +71,12 @@ func (s *<%== m.Name %>) Update(tx dblib.DBLike) error {
 }
 
 func (s *<%== m.Name %>) Insert(tx dblib.DBLike) error {
-		stmt, err := tx.Prepare("INSERT INTO <%== m.Name %>(<%== fieldString("", m.FieldSliceWithoutID(), "") %>) VALUES(<%== util.QuestionMarks(len(m.FieldSliceWithoutID())) %>)") // ADD FIELD HERE
+		stmt, err := tx.Prepare("INSERT INTO <%== m.Name %>(<%== fieldString("", m.FieldSliceWithoutID(), "") %>) VALUES(<%== util.QuestionMarks(len(m.FieldSliceWithoutID())) %>)")
 		if err != nil {
 			return err
 		}
 
-		result, err := stmt.Exec(<%== fieldString("s.", m.FieldSliceWithoutID(), "") %>) // ADD FIELD HERE
+		result, err := stmt.Exec(<%== fieldString("s.", m.FieldSliceWithoutID(), "") %>)
 		if err != nil {
 			return err
     }
