@@ -18,7 +18,7 @@ import (
 	//"fmt"
 )
 
-//arrays and slices aren't handled properly.
+// arrays and slices aren't handled properly.
 func tsTypeForField(f ast.Field) string {
 	switch f.Type {
 	case "int", "int8", "int16", "int32", "int64", "uint", "uint8", "uint16", "uint32", "uint64", "uintptr", "byte", "rune", "float32", "float64":
