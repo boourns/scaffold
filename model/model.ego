@@ -34,7 +34,7 @@ func load<%== m.Name %>(rows *sql.Rows) (*<%== m.Name %>, error) {
 	return &ret, nil
 }
 
-func Select<%== m.Name %>(tx dblib.DBLike, cond string, condFields ...interface{}) ([]*<%== m.Name %>, error) {
+func Select<%== m.Name %>(tx dblib.Queryable, cond string, condFields ...interface{}) ([]*<%== m.Name %>, error) {
   ret := []*<%==m.Name%>{}
   sql := fmt.Sprintf("SELECT %s from <%== m.Name %> %s", sqlFieldsFor<%==m.Name%>(), cond)
 	rows, err := tx.Query(sql, condFields...)
@@ -52,7 +52,7 @@ func Select<%== m.Name %>(tx dblib.DBLike, cond string, condFields ...interface{
   return ret, nil
 }
 
-func (s *<%== m.Name %>) Update(tx dblib.DBLike) error {
+func (s *<%== m.Name %>) Update(tx dblib.Queryable) error {
 		stmt, err := tx.Prepare("UPDATE <%== m.Name %> SET <%== fieldString("", m.FieldSlice(), "=?") %> WHERE <%== m.Name %>.ID = ?", )
 
 		if err != nil {
@@ -70,7 +70,7 @@ func (s *<%== m.Name %>) Update(tx dblib.DBLike) error {
     return nil
 }
 
-func (s *<%== m.Name %>) Insert(tx dblib.DBLike) error {
+func (s *<%== m.Name %>) Insert(tx dblib.Queryable) error {
 		stmt, err := tx.Prepare("INSERT INTO <%== m.Name %>(<%== fieldString("", m.FieldSliceWithoutID(), "") %>) VALUES(<%== util.QuestionMarks(len(m.FieldSliceWithoutID())) %>)")
 		if err != nil {
 			return err
@@ -88,7 +88,7 @@ func (s *<%== m.Name %>) Insert(tx dblib.DBLike) error {
 	  return nil
 }
 
-func (s *<%== m.Name %>) Delete(tx dblib.DBLike) error {
+func (s *<%== m.Name %>) Delete(tx dblib.Queryable) error {
 		stmt, err := tx.Prepare("DELETE FROM <%== m.Name %> WHERE ID = ?")
 		if err != nil {
 			return err
@@ -102,7 +102,7 @@ func (s *<%== m.Name %>) Delete(tx dblib.DBLike) error {
 	  return nil
 }
 
-func Create<%== m.Name %>Table(tx dblib.DBLike) error {
+func Create<%== m.Name %>Table(tx dblib.Queryable) error {
 		stmt, err := tx.Prepare(`<%== sqlgen.CreateTable(m) %>`)
 		if err != nil {
 			return err
