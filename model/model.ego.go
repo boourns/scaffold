@@ -52,7 +52,7 @@ func modelTemplateGo(w io.Writer, m *ast.Model) {
 //line model.ego:37
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:37
-	_, _ = io.WriteString(w, "(tx dblib.DBLike, cond string, condFields ...interface{}) ([]*")
+	_, _ = io.WriteString(w, "(tx dblib.Queryable, cond string, condFields ...interface{}) ([]*")
 //line model.ego:37
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:37
@@ -76,7 +76,7 @@ func modelTemplateGo(w io.Writer, m *ast.Model) {
 //line model.ego:55
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:55
-	_, _ = io.WriteString(w, ") Update(tx dblib.DBLike) error {\n\t\tstmt, err := tx.Prepare(\"UPDATE ")
+	_, _ = io.WriteString(w, ") Update(tx dblib.Queryable) error {\n\t\tstmt, err := tx.Prepare(\"UPDATE ")
 //line model.ego:56
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:56
@@ -96,7 +96,7 @@ func modelTemplateGo(w io.Writer, m *ast.Model) {
 //line model.ego:73
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:73
-	_, _ = io.WriteString(w, ") Insert(tx dblib.DBLike) error {\n\t\tstmt, err := tx.Prepare(\"INSERT INTO ")
+	_, _ = io.WriteString(w, ") Insert(tx dblib.Queryable) error {\n\t\tstmt, err := tx.Prepare(\"INSERT INTO ")
 //line model.ego:74
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:74
@@ -116,7 +116,7 @@ func modelTemplateGo(w io.Writer, m *ast.Model) {
 //line model.ego:91
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:91
-	_, _ = io.WriteString(w, ") Delete(tx dblib.DBLike) error {\n\t\tstmt, err := tx.Prepare(\"DELETE FROM ")
+	_, _ = io.WriteString(w, ") Delete(tx dblib.Queryable) error {\n\t\tstmt, err := tx.Prepare(\"DELETE FROM ")
 //line model.ego:92
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:92
@@ -124,7 +124,7 @@ func modelTemplateGo(w io.Writer, m *ast.Model) {
 //line model.ego:105
 	_, _ = fmt.Fprint(w, m.Name)
 //line model.ego:105
-	_, _ = io.WriteString(w, "Table(tx dblib.DBLike) error {\n\t\tstmt, err := tx.Prepare(`")
+	_, _ = io.WriteString(w, "Table(tx dblib.Queryable) error {\n\t\tstmt, err := tx.Prepare(`")
 //line model.ego:106
 	_, _ = fmt.Fprint(w, sqlgen.CreateTable(m))
 //line model.ego:106
